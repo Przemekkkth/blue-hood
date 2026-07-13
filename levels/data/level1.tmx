@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="42">
+ <editorsettings>
+  <export target="../level1.lua" format="lua"/>
+ </editorsettings>
+ <tileset firstgid="1" name="basic" tilewidth="16" tileheight="16" tilecount="72" columns="12">
+  <image source="../../assets/tilesets/tileset.png" width="192" height="96"/>
+ </tileset>
+ <tileset firstgid="73" name="orbs" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="../../assets/tilesets/orbs.png" width="16" height="16"/>
+ </tileset>
+ <tileset firstgid="74" name="miscellaneus" tilewidth="16" tileheight="16" tilecount="8" columns="4">
+  <image source="../../assets/tilesets/miscellaneus.png" width="64" height="32"/>
+ </tileset>
+ <layer id="1" name="foreground" width="20" height="10">
+  <data encoding="csv">
+7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,
+19,20,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,21,
+19,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,21,
+19,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,21,
+19,21,2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,21,
+19,20,20,28,44,44,44,44,44,44,44,44,45,0,0,0,0,0,19,21,
+19,20,20,15,0,0,0,0,0,0,0,0,0,0,0,44,0,0,19,21,
+19,20,20,28,44,44,44,44,44,44,44,44,44,44,44,20,44,44,30,21,
+19,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,21,
+31,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,33
+</data>
+ </layer>
+ <layer id="8" name="miscellaneus" width="20" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,78,0,0,0,0,
+0,0,0,0,0,75,0,75,0,0,0,0,0,0,0,0,76,81,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="7" name="orbs" width="20" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,73,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="10" name="hint">
+  <object id="37" x="272" y="96" width="16" height="16">
+   <properties>
+    <property name="hint_text">K ATTACK
+SPACE JUMP</property>
+   </properties>
+  </object>
+  <object id="39" x="240" y="80" width="16" height="16">
+   <properties>
+    <property name="hint_text" value="GO TO THE DOOR"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="torch">
+  <object id="36" x="56" y="40" width="8" height="24"/>
+ </objectgroup>
+ <objectgroup id="5" name="door">
+  <object id="34" x="32" y="40" width="24" height="24"/>
+ </objectgroup>
+ <objectgroup id="6" name="mushrooms">
+  <object id="35" x="177" y="98" width="14" height="14"/>
+ </objectgroup>
+ <objectgroup id="2" name="player">
+  <object id="5" x="128" y="64" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="3" name="walls">
+  <object id="21" x="288" y="32" width="16" height="96"/>
+  <object id="25" x="16" y="16" width="16" height="64"/>
+  <object id="29" x="207" y="81" width="1" height="14"/>
+  <object id="30" x="240" y="97" width="1" height="14"/>
+  <object id="31" x="255" y="97" width="1" height="14"/>
+  <object id="32" x="63" y="65" width="1" height="14"/>
+  <object id="33" x="63" y="97" width="1" height="14"/>
+ </objectgroup>
+ <objectgroup id="4" name="solid">
+  <object id="27" x="32" y="64" width="31" height="16"/>
+  <object id="23" x="32" y="16" width="272" height="16"/>
+  <object id="8" x="64" y="80" width="143" height="16"/>
+  <object id="15" x="64" y="112" width="224" height="16"/>
+  <object id="10" x="48" y="96" width="15" height="16"/>
+  <object id="17" x="241" y="96" width="14" height="16"/>
+ </objectgroup>
+</map>
