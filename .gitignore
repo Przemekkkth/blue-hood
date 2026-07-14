@@ -1,0 +1,32 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Builds
+dist/
+build/
+bin/
+out/
+
+# Zipped
+*.love
+*.zip
+
+# Cache
+.cache/
+
+# Tiled
+*.tiled-session
