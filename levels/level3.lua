@@ -9,8 +9,8 @@ return {
   height = 12,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 13,
-  nextobjectid = 166,
+  nextlayerid = 14,
+  nextobjectid = 167,
   properties = {},
   tilesets = {
     {
@@ -160,7 +160,7 @@ return {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 75, 75, 75, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 75, 0, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 76, 0, 74, 75, 0, 0,
+        0, 0, 75, 0, 75, 81, 0, 0, 0, 0, 0, 0, 0, 0, 76, 0, 74, 75, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -490,6 +490,40 @@ return {
       parallaxy = 1,
       properties = {},
       objects = {}
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 13,
+      name = "hint",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {
+        ["hint_text"] = "SPACE JUMP"
+      },
+      objects = {
+        {
+          id = 166,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 80,
+          y = 128,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["hint_text"] = "SPACE - JUMP"
+          }
+        }
+      }
     }
   }
 }
