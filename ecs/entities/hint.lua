@@ -34,5 +34,22 @@ return function()
         hint.text.position.y = hint.position.y - FONT_x1:getHeight() * 2 - 2
     end
 
+    function hint:update(dt)
+        local x = hint.position.x
+        local y = hint.position.y
+        local player_hits = WindfieldSystem.PhysicsWorld:queryRectangleArea(
+            x,
+            y,
+            hint.hitbox.w,
+            hint.hitbox.h,
+            {'Player'}
+        )
+        if #player_hits > 0 then
+            hint.text.text.visible = true
+        else
+            hint.text.text.visible = false
+        end
+    end
+
     return hint
 end

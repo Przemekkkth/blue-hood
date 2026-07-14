@@ -37,5 +37,51 @@ return function()
         mushroom.sprite.flipped_h = mushroom.speed < 0
     end
 
+    function mushroom:update(dt)
+        local collider = mushroom.collider.data
+        local x, y = collider:getPosition()
+        local _, vy = collider:getLinearVelocity()
+        local w = mushroom.hitbox.w or 0
+        local h = mushroom.hitbox.h or 0
+        local dir = mushroom.speed > 0 and 1 or -1
+
+        local ground = WindfieldSystem.PhysicsWorld:queryRectangleArea(
+            mushroom.position.x + mushroom.hitbox.w / 2 + dir * (mushroom.hitbox.w / 2 + 2),
+            mushroom.position.y + mushroom.hitbox.h + 1,
+            2,
+            2,
+            {"Solid"}
+        )
+
+        if #ground == 0 then
+            mushroom:flip()
+        end
+
+        if x <= w / 2 then
+            x = w / 2
+            mushroom:flip()
+        end
+        
+        if x >= GAME_DATA.MAX_X - w / 2 then
+            x = GAME_DATA.MAX_X - w / 2
+            mushroom:flip()
+        end
+        
+        collider:setPosition(x, y)
+
+        mushroom.position.x = x - w / 2 - PLAYER_DATA.PADDING_X
+        mushroom.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+
+        collider:setLinearVelocity(mushroom.speed, vy)
+
+        if collider:enter('Wall') or collider:enter('Player') then
+            mushroom:flip()
+        end
+
+        if mushroom.dead then
+            collider:destroy()
+        end
+    end
+
     return mushroom
 end
