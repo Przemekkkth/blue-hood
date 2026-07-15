@@ -19,7 +19,6 @@ return function()
     hint.text = ECS.entity()
     hint.text:give('position', 0, 0)
     hint.text:give('text', 'K ATTACK\nSPACE JUMP', FONT_x1)
-    hint.text:give('HUD')
 
     function hint:set_hint_text(text)
         hint.text.text.data = text

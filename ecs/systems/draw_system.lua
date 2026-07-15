@@ -1,4 +1,4 @@
-DrawSystem = ECS.system({pool = {'position', 'sprite'}, hud_pool = {'HUD'}, background_pool = {'background'}} )
+DrawSystem = ECS.system({pool = {'position', 'sprite'}, text_pool = {'text'}, hud_pool = {'HUD'}, background_pool = {'background'}} )
 
 function DrawSystem:draw()
     for _, entity in ipairs(self.pool) do
@@ -33,6 +33,17 @@ function DrawSystem:draw()
                 else
                     love.graphics.draw(sprite, x, y)
                 end
+            end
+        end
+    end
+
+    for _, entity in ipairs(self.text_pool) do
+        if not entity:has('HUD') then
+            local x = math.floor(entity.position.x)
+            local y = math.floor(entity.position.y)
+            if entity.text.visible then
+                love.graphics.setFont(entity.text.font)
+                love.graphics.print(entity.text.data, x, y)
             end
         end
     end
