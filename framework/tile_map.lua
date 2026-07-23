@@ -178,3 +178,20 @@ function TileMap:add_orbs_to_world(world)
         end
     end
 end
+
+function TileMap:add_fauna_to_world(world)
+    local fauna_layer = self.map.layers['fauna']
+    if fauna_layer then
+        for _, obj in ipairs(fauna_layer.objects) do
+            local rabbit = require 'ecs.entities.rabbit'()
+            local x = obj.x
+            local y = obj.y
+            rabbit:give('position', x, y)
+            rabbit:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(x, y, rabbit.hitbox.w, rabbit.hitbox.h))
+
+            rabbit.collider.data:setCollisionClass('Fauna')
+            
+            world:addEntity(rabbit)
+        end
+    end
+end

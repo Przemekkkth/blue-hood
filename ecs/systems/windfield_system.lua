@@ -1,6 +1,6 @@
 WindfieldSystem = ECS.system({playerPool = {'is_player', 'physics'}, enemyPool = {'enemy', 'physics'}, 
                               doorPool = {'door', 'physics'}, stonePool = {'stone', 'physics'},
-                              hintPool = {'hint', 'physics'}})
+                              hintPool = {'hint', 'physics'}, faunaPool = {'fauna', 'physics'} })
 WindfieldSystem.PhysicsWorld = nil
 WindfieldSystem.Gravity = {x = 0, y = PHYSICS.GRAVITY}
 
@@ -40,5 +40,9 @@ function WindfieldSystem:update(dt)
 
     for _, hint in ipairs(self.hintPool) do
         hint:update(dt)
+    end
+
+    for _, fauna in ipairs(self.faunaPool) do
+        fauna:update(dt)
     end
 end

@@ -14,6 +14,7 @@ function GameRoom:new()
     self.physics_world:addCollisionClass('Hazard')
     self.physics_world:addCollisionClass('Stone')
     self.physics_world:addCollisionClass("Orbs", {ignores = {'Enemy', 'Stone'}})
+    self.physics_world:addCollisionClass("Fauna", {ignores = {'Enemy', 'Stone', 'Player'}})
     self.physics_world:setQueryDebugDrawing(true)
 
     WindfieldSystem.PhysicsWorld = self.physics_world
@@ -41,6 +42,8 @@ function GameRoom:new()
     self.tile_map:add_stones_to_world(self.world)
 
     self.tile_map:add_hints_to_world(self.world)
+
+    self.tile_map:add_fauna_to_world(self.world)
 
     self:create_hud()
 
