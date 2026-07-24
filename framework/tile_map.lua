@@ -183,7 +183,7 @@ function TileMap:add_fauna_to_world(world)
     local fauna_layer = self.map.layers['fauna']
     if fauna_layer then
         for _, obj in ipairs(fauna_layer.objects) do
-            local rabbit = require 'ecs.entities.rabbit'()
+            local rabbit = require 'ecs.entities.walking_bird'()
             local x = obj.x
             local y = obj.y
             rabbit:give('position', x, y)
