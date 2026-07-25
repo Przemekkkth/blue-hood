@@ -9,8 +9,8 @@ return {
   height = 10,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 11,
-  nextobjectid = 42,
+  nextlayerid = 12,
+  nextobjectid = 43,
   properties = {},
   tilesets = {
     {
@@ -236,6 +236,38 @@ return {
           visible = true,
           properties = {
             ["hint_text"] = "GO TO THE DOOR"
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 11,
+      name = "fauna",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 42,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 160,
+          y = 72,
+          width = 16,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "rabbit"
           }
         }
       }

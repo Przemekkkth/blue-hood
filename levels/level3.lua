@@ -9,8 +9,8 @@ return {
   height = 12,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 14,
-  nextobjectid = 167,
+  nextlayerid = 15,
+  nextobjectid = 180,
   properties = {},
   tilesets = {
     {
@@ -218,9 +218,9 @@ return {
           type = "",
           shape = "rectangle",
           x = 0,
-          y = 32,
+          y = 48,
           width = 32,
-          height = 128,
+          height = 112,
           rotation = 0,
           opacity = 1,
           visible = true,
@@ -232,9 +232,9 @@ return {
           type = "",
           shape = "rectangle",
           x = 288,
-          y = 16,
+          y = 32,
           width = 32,
-          height = 144,
+          height = 128,
           rotation = 0,
           opacity = 1,
           visible = true,
@@ -295,6 +295,34 @@ return {
           opacity = 1,
           visible = true,
           properties = {}
+        },
+        {
+          id = 175,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 31,
+          y = 33,
+          width = 1,
+          height = 15,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 178,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 288,
+          y = 17,
+          width = 1,
+          height = 15,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {}
         }
       }
     },
@@ -348,6 +376,34 @@ return {
           x = 225,
           y = 96,
           width = 46,
+          height = 16,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 174,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 0,
+          y = 32,
+          width = 31,
+          height = 16,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 177,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 289,
+          y = 16,
+          width = 31,
           height = 16,
           rotation = 0,
           opacity = 1,
@@ -521,6 +577,134 @@ return {
           visible = true,
           properties = {
             ["hint_text"] = "SPACE - JUMP"
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 14,
+      name = "fauna",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 167,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 32,
+          y = 0,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "flying_bird"
+          }
+        },
+        {
+          id = 170,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 112,
+          y = 8,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "flying_bird"
+          }
+        },
+        {
+          id = 171,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 48,
+          y = 32,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "flying_bird"
+          }
+        },
+        {
+          id = 172,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 224,
+          y = 40,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "flying_bird"
+          }
+        },
+        {
+          id = 173,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 160,
+          y = 104,
+          width = 16,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "rabbit"
+          }
+        },
+        {
+          id = 176,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 8,
+          y = 24,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "rabbit"
+          }
+        },
+        {
+          id = 179,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 300,
+          y = 8,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "walking_bird"
           }
         }
       }

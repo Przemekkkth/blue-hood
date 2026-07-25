@@ -9,8 +9,8 @@ return {
   height = 14,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 14,
-  nextobjectid = 270,
+  nextlayerid = 15,
+  nextobjectid = 273,
   properties = {},
   tilesets = {
     {
@@ -1466,6 +1466,70 @@ return {
           visible = true,
           properties = {
             ["hint_text"] = "SHIFT\nSPRINT"
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 14,
+      name = "fauna",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 270,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 8,
+          y = 184,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "walking_bird"
+          }
+        },
+        {
+          id = 271,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 438,
+          y = 24,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "walking_bird"
+          }
+        },
+        {
+          id = 272,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 48,
+          y = 130,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "flying_bird"
           }
         }
       }

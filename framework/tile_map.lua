@@ -178,3 +178,30 @@ function TileMap:add_orbs_to_world(world)
         end
     end
 end
+
+function TileMap:add_fauna_to_world(world)
+    local fauna_layer = self.map.layers['fauna']
+    if fauna_layer then
+        for _, obj in ipairs(fauna_layer.objects) do
+            local fauna_obj
+            print('obj.properties.type ', obj.properties.type)
+            if obj.properties.type == 'rabbit' then
+                fauna_obj = require 'ecs.entities.rabbit'()
+            elseif obj.properties.type == 'walking_bird' then
+                fauna_obj = require 'ecs.entities.walking_bird'()
+            else
+                fauna_obj = require 'ecs.entities.flying_bird'()
+            end
+            
+            local x = obj.x
+            local y = obj.y
+            fauna_obj:give('position', x, y)
+            fauna_obj:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(x, y, fauna_obj.hitbox.w, fauna_obj.hitbox.h))
+
+            fauna_obj.collider.data:setCollisionClass('Fauna')
+            fauna_obj.collider.data:setGravityScale(0)
+            
+            world:addEntity(fauna_obj)
+        end
+    end
+end

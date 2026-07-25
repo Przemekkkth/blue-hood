@@ -7,7 +7,8 @@ assets.sprites = {
     door = love.graphics.newImage("assets/sprites/door.png"),
     spikes = love.graphics.newImage("assets/sprites/spikes.png"),
     orbs = love.graphics.newImage("assets/sprites/orbs_spritesheet.png"),
-    torch = love.graphics.newImage("assets/sprites/tiki_torch_spritesheet.png")
+    torch = love.graphics.newImage("assets/sprites/tiki_torch_spritesheet.png"),
+    fauna = love.graphics.newImage("assets/sprites/fauna_spritesheet.png")
 }
 
 assets.hud = {

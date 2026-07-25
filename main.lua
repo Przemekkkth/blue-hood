@@ -1,5 +1,6 @@
 Input = require 'libraries.boipushy.Input'
 Object = require 'libraries.classic.classic'
+Timer = require 'libraries.timer.timer'
 ECS = require 'libraries.concord'
 sti = require 'libraries.sti'
 wf = require 'libraries.windfield'

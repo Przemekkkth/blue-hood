@@ -69,3 +69,5 @@ end)
 ECS.component('sfx', function(component, id)
     component.id = id
 end)
+
+ECS.component('fauna')
