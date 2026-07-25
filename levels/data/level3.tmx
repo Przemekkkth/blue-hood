@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="167">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="180">
  <editorsettings>
   <export target="../level3.lua" format="lua"/>
  </editorsettings>
@@ -61,17 +61,21 @@
 </data>
  </layer>
  <objectgroup id="2" name="walls">
-  <object id="155" x="0" y="32" width="32" height="128"/>
-  <object id="156" x="288" y="16" width="32" height="144"/>
+  <object id="155" x="0" y="48" width="32" height="112"/>
+  <object id="156" x="288" y="32" width="32" height="128"/>
   <object id="160" x="224" y="97" width="1" height="14"/>
   <object id="161" x="271" y="97" width="1" height="14"/>
   <object id="162" x="191" y="113" width="1" height="14"/>
   <object id="163" x="144" y="113" width="1" height="14"/>
+  <object id="175" x="31" y="33" width="1" height="15"/>
+  <object id="178" x="288" y="17" width="1" height="15"/>
  </objectgroup>
  <objectgroup id="3" name="solid">
   <object id="157" x="32" y="144" width="265" height="36"/>
   <object id="158" x="145" y="112" width="46" height="16"/>
   <object id="159" x="225" y="96" width="46" height="16"/>
+  <object id="174" x="0" y="32" width="31" height="16"/>
+  <object id="177" x="289" y="16" width="31" height="16"/>
  </objectgroup>
  <objectgroup id="12" name="torch">
   <object id="165" x="239" y="72" width="8" height="24"/>
@@ -92,6 +96,43 @@
   <object id="166" x="80" y="128" width="16" height="16">
    <properties>
     <property name="hint_text" value="SPACE - JUMP"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="14" name="fauna">
+  <object id="167" x="32" y="0" width="8" height="8">
+   <properties>
+    <property name="type" value="flying_bird"/>
+   </properties>
+  </object>
+  <object id="170" x="112" y="8" width="8" height="8">
+   <properties>
+    <property name="type" value="flying_bird"/>
+   </properties>
+  </object>
+  <object id="171" x="48" y="32" width="8" height="8">
+   <properties>
+    <property name="type" value="flying_bird"/>
+   </properties>
+  </object>
+  <object id="172" x="224" y="40" width="8" height="8">
+   <properties>
+    <property name="type" value="flying_bird"/>
+   </properties>
+  </object>
+  <object id="173" x="160" y="104" width="16" height="8">
+   <properties>
+    <property name="type" value="rabbit"/>
+   </properties>
+  </object>
+  <object id="176" x="8" y="24" width="8" height="8">
+   <properties>
+    <property name="type" value="rabbit"/>
+   </properties>
+  </object>
+  <object id="179" x="300" y="8" width="8" height="8">
+   <properties>
+    <property name="type" value="walking_bird"/>
    </properties>
   </object>
  </objectgroup>

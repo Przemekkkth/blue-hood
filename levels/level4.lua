@@ -9,8 +9,8 @@ return {
   height = 12,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 14,
-  nextobjectid = 190,
+  nextlayerid = 15,
+  nextobjectid = 193,
   properties = {},
   tilesets = {
     {
@@ -634,6 +634,70 @@ return {
           visible = true,
           properties = {
             ["hint_text"] = "COLLECT BLUE ORB"
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 14,
+      name = "fauna",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 190,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 404,
+          y = 104,
+          width = 16,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "rabbit"
+          }
+        },
+        {
+          id = 191,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 256,
+          y = 52,
+          width = 8,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "flying_bird"
+          }
+        },
+        {
+          id = 192,
+          name = "",
+          type = "",
+          shape = "rectangle",
+          x = 96,
+          y = 136,
+          width = 16,
+          height = 8,
+          rotation = 0,
+          opacity = 1,
+          visible = true,
+          properties = {
+            ["type"] = "rabbit"
           }
         }
       }
