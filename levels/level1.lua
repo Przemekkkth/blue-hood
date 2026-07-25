@@ -267,7 +267,7 @@ return {
           opacity = 1,
           visible = true,
           properties = {
-            ["type"] = "walking_bird"
+            ["type"] = "rabbit"
           }
         }
       }

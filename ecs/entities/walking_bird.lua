@@ -71,9 +71,12 @@ return function()
         if walking_bird.state == walking_bird.states.IDLE then
             walking_bird.state = walking_bird.states.RUN
             walking_bird.anim8.name = 'run'
+            local dir = walking_bird.speed > 0 and 1 or -1
+            walking_bird.collider.data:setLinearVelocity(dir * walking_bird.speed, 0)
         else
             walking_bird.state = walking_bird.states.IDLE
             walking_bird.anim8.name = 'idle'
+            walking_bird.collider.data:setLinearVelocity(0, 0)
         end
     end
 

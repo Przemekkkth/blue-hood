@@ -71,9 +71,12 @@ return function()
         if rabbit.state == rabbit.states.IDLE then
             rabbit.state = rabbit.states.RUN
             rabbit.anim8.name = 'run'
+            local dir = rabbit.speed > 0 and 1 or -1
+            rabbit.collider.data:setLinearVelocity(dir * rabbit.speed, 0)
         else
             rabbit.state = rabbit.states.IDLE
             rabbit.anim8.name = 'idle'
+            rabbit.collider.data:setLinearVelocity(0, 0)
         end
     end
 
