@@ -68,7 +68,11 @@ SPACE JUMP</property>
   </object>
  </objectgroup>
  <objectgroup id="11" name="fauna">
-  <object id="42" x="160" y="72" width="16" height="8"/>
+  <object id="42" x="160" y="72" width="16" height="8">
+   <properties>
+    <property name="type" value="walking_bird"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="9" name="torch">
   <object id="36" x="56" y="40" width="8" height="24"/>

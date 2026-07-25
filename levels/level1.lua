@@ -266,7 +266,9 @@ return {
           rotation = 0,
           opacity = 1,
           visible = true,
-          properties = {}
+          properties = {
+            ["type"] = "walking_bird"
+          }
         }
       }
     },
