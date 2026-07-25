@@ -14,7 +14,7 @@ function GameRoom:new()
     self.physics_world:addCollisionClass('Hazard')
     self.physics_world:addCollisionClass('Stone')
     self.physics_world:addCollisionClass("Orbs", {ignores = {'Enemy', 'Stone'}})
-    self.physics_world:addCollisionClass("Fauna", {ignores = {'Enemy', 'Stone', 'Player'}})
+    self.physics_world:addCollisionClass("Fauna", {ignores = {'Fauna', 'Enemy', 'Stone', 'Player'}})
     self.physics_world:setQueryDebugDrawing(true)
 
     WindfieldSystem.PhysicsWorld = self.physics_world
