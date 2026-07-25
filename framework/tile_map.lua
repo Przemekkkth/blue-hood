@@ -183,13 +183,14 @@ function TileMap:add_fauna_to_world(world)
     local fauna_layer = self.map.layers['fauna']
     if fauna_layer then
         for _, obj in ipairs(fauna_layer.objects) do
-            local rabbit = require 'ecs.entities.walking_bird'()
+            local rabbit = require 'ecs.entities.flying_bird'()
             local x = obj.x
             local y = obj.y
             rabbit:give('position', x, y)
             rabbit:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(x, y, rabbit.hitbox.w, rabbit.hitbox.h))
 
             rabbit.collider.data:setCollisionClass('Fauna')
+            rabbit.collider.data:setGravityScale(0)
             
             world:addEntity(rabbit)
         end
