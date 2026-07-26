@@ -60,4 +60,7 @@ local path = ... .. '.'
 for _, class in ipairs(classes) do
 	require(path .. class)
 end
+
+require(path .. 'CustomControls..AnimatedLabel')
+
 return LOVELi
