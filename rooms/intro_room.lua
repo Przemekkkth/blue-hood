@@ -12,12 +12,32 @@ function IntroRoom:new()
             ]]
         , ismultiline = true, width = "*", height = "*", textcolor = loveli.Color.parse(0xFFFFFFFF) } )
     )
+
+    self.timer = Timer()
+    self.show_text = false
+    self.can_continue = false
+    self.timer:after(10.0, function()
+        self.can_continue = true
+        self.timer:every(1.0, function()
+            self.show_text = not self.show_text
+        end) 
+    end)
 end
 
 function IntroRoom:update(dt)
     self.layoutmanager:update(dt)
+    self.timer:update(dt)
+    if self.can_continue and input:pressed('accept_action') then
+        print('continue')
+    end
 end
 
 function IntroRoom:draw()
     self.layoutmanager:draw()
+    if self.show_text then
+        love.graphics.setFont(FONT_x2)
+        local txt = "PRESS E TO CONTINUE..."
+        local w = love.graphics.getFont():getWidth(txt) 
+        love.graphics.print(txt, DRAW_WIDTH / 2, DRAW_HEIGHT - 20, 0, 1, 1, w / 2)
+    end
 end
