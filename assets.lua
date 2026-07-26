@@ -32,5 +32,6 @@ assets.audios = {
     [AUDIO_ID.HERO_JUMP] = love.audio.newSource('assets/sfx/hero_jump.wav', 'static'),
     [AUDIO_ID.HERO_PUNCH] = love.audio.newSource('assets/sfx/hero_punch.wav', 'static'),
     [AUDIO_ID.HERO_DEATH] = love.audio.newSource('assets/sfx/hero_death.wav', 'static'),
-    [AUDIO_ID.ORB_COLLECT] = love.audio.newSource('assets/sfx/orb_collect.wav', 'static')
+    [AUDIO_ID.ORB_COLLECT] = love.audio.newSource('assets/sfx/orb_collect.wav', 'static'),
+    [AUDIO_ID.KEY_PRESSED] = love.audio.newSource('assets/sfx/key_pressed.wav', 'static')
 }
