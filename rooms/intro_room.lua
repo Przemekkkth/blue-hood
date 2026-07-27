@@ -39,7 +39,8 @@ function IntroRoom:update(dt)
     self.layoutmanager:update(dt)
     self.timer:update(dt)
     if self.can_continue and input:pressed('accept_action') then
-        print('continue')
+        GAME_DATA.LEVEL = 1
+        go_to_room("GameRoom")
     end
 end
 
