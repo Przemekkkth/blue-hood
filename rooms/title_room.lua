@@ -11,11 +11,13 @@ function TitleRoom:new()
     MUSIC:setVolume(GAME_DATA.MUSIC_VOLUME)
     MUSIC:play()
 
-    local continue_element = TextMenuElement("CONTINUE"):disable()
-    self:add_element(continue_element)
+    local select_level_element = TextMenuElement("SELECT LEVEL", function()
+        go_to_room('SelectLevelRoom')
+    end)
+    self:add_element(select_level_element)
     
     local new_game_element = TextMenuElement("NEW GAME", function()
-        go_to_room("SelectLevelRoom")
+        go_to_room('IntroRoom')
     end)
     self:add_element(new_game_element)
 
