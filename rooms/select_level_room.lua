@@ -59,7 +59,7 @@ function SelectLevelRoom:keypressed(key, scancode, isrepeat)
 end
 
 function SelectLevelRoom:select_level(n)
-    GAME_DATA.LEVEL = n
+    SWITCH_LEVEL(n)
     go_to_room("GameRoom")
 end
 

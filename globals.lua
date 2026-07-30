@@ -31,6 +31,15 @@ function RESET_GAME_DATA()
     GAME_DATA.PLAYER_HEARTS = 3
 end
 
+function SWITCH_LEVEL(n)
+    GAME_DATA.LEVEL = n
+    if n < 5 then
+        PLAYER_DATA.CAN_DOUBLE_JUMP = false
+    else
+        PLAYER_DATA.CAN_DOUBLE_JUMP = true
+    end
+end
+
 PLAYER_DATA = {
     SPEED = 70,
     MAX_SPEED = 1.5 * 70,
@@ -39,7 +48,8 @@ PLAYER_DATA = {
     PADDING_Y = 1,
     INVINCIBLE_TIME = 2.5,
     BOUNCE = 150,
-    HARD_LANDING_SPEED = 150
+    HARD_LANDING_SPEED = 150,
+    CAN_DOUBLE_JUMP = false
 }
 
 ENEMY_DATA = {
@@ -86,3 +96,4 @@ AUDIO_ID = {
     ORB_COLLECT = 'ORB_COLLECT',
     KEY_PRESSED = 'KEY_PRESSED'
 }
+
