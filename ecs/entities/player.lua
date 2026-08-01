@@ -6,6 +6,7 @@ return function()
     player.hearts = GAME_DATA.PLAYER_HEARTS
     player.hearts_huds = {}
     player.was_ground = true
+    player.can_double_jump = true 
 
     local g = anim8.newGrid(16, 16, assets.sprites.hero:getWidth(), assets.sprites.hero:getHeight())
     player:give('anim8', {
@@ -143,6 +144,9 @@ return function()
         )
 
         local isGrounded = #groundHits > 0
+        if isGrounded then
+            player.can_double_jump = true
+        end
 
         local accel = PLAYER_DATA.ACCELERATION
         local maxSpeed = PLAYER_DATA.SPEED
@@ -151,10 +155,17 @@ return function()
             maxSpeed = PLAYER_DATA.MAX_SPEED
         end
 
-        if input:pressed('jump') and isGrounded then
-            vy = -PHYSICS.PLAYER_JUMP_VELOCITY
-            player:give('sfx', AUDIO_ID.HERO_JUMP)
-            player:add_jump_dust()
+        if input:pressed('jump') then
+            if isGrounded then
+                vy = -PHYSICS.PLAYER_JUMP_VELOCITY
+                player:give('sfx', AUDIO_ID.HERO_JUMP)
+                player:add_jump_dust()
+                player.can_double_jump = true
+            elseif player.can_double_jump and PLAYER_DATA.CAN_DOUBLE_JUMP then
+                player:give('sfx', AUDIO_ID.HERO_JUMP)
+                vy = -PHYSICS.PLAYER_SECOND_JUMP_VELOCITY
+                player.can_double_jump = false
+            end
         end
 
         if input:released('jump') and vy < 0 then

@@ -19,6 +19,7 @@ function SelectLevelRoom:new()
     self.btn3 = loveli.Button:new{x = 2*32+16, y = first_row, clicked = function() end, text = "3", font = FONT_x2, textcolor = self.text_color, backgroundcolor = self.normal_color, bordercolor = self.text_color, width = 24, height = 24}
     self.btn4 = loveli.Button:new{x = 3*32+16, y = first_row, clicked = function() end, text = "4", font = FONT_x2, textcolor = self.text_color, backgroundcolor = self.normal_color, bordercolor = self.text_color, width = 24, height = 24}
     self.btn5 = loveli.Button:new{x = 4*32+16, y = first_row, clicked = function() end, text = "5", font = FONT_x2, textcolor = self.text_color, backgroundcolor = self.normal_color, bordercolor = self.text_color, width = 24, height = 24}
+    self.btn6 = loveli.Button:new{x = 5*32+16, y = first_row, clicked = function() end, text = "6", font = FONT_x2, textcolor = self.text_color, backgroundcolor = self.normal_color, bordercolor = self.text_color, width = 24, height = 24}
 
     local absolutelayout = loveli.AbsoluteLayout:new{ width = screen_width, height = "*", margin = loveli.Thickness.parse(15) }
       :with(label)
@@ -27,6 +28,7 @@ function SelectLevelRoom:new()
       :with(self.btn3)
       :with(self.btn4)
       :with(self.btn5)
+      :with(self.btn6)
       :with(self.back_btn)
     
     self.layoutmanager = loveli.LayoutManager:new{}:with(absolutelayout)
@@ -43,6 +45,8 @@ function SelectLevelRoom:update(dt)
         self:select_level(4)
     elseif self.layoutmanager.focusedcontrol == self.btn5 and input:released('accept_action') then
         self:select_level(5)
+    elseif self.layoutmanager.focusedcontrol == self.btn6 and input:released('accept_action') then
+        self:select_level(6)
     elseif self.layoutmanager.focusedcontrol == self.back_btn and input:released('accept_action') then
         self:go_to_title_room()
     end
@@ -59,7 +63,7 @@ function SelectLevelRoom:keypressed(key, scancode, isrepeat)
 end
 
 function SelectLevelRoom:select_level(n)
-    GAME_DATA.LEVEL = n
+    SWITCH_LEVEL(n)
     go_to_room("GameRoom")
 end
 
