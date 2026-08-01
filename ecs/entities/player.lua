@@ -161,7 +161,7 @@ return function()
                 player:give('sfx', AUDIO_ID.HERO_JUMP)
                 player:add_jump_dust()
                 player.can_double_jump = true
-            elseif player.can_double_jump then
+            elseif player.can_double_jump and PLAYER_DATA.CAN_DOUBLE_JUMP then
                 player:give('sfx', AUDIO_ID.HERO_JUMP)
                 vy = -PHYSICS.PLAYER_SECOND_JUMP_VELOCITY
                 player.can_double_jump = false
