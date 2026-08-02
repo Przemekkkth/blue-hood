@@ -14,8 +14,12 @@ return function()
         )
 
         if #player_hits > 0 then
-            SWITCH_LEVEL(GAME_DATA.LEVEL + 1)
-            GameRoom.STATE = GameRoom.STATES.RESTART
+            if GAME_DATA.LEVEL + 1 > GAME_DATA.COUNT_OF_LEVELS then
+                GameRoom.STATE = GameRoom.STATES.WIN
+            else
+                SWITCH_LEVEL(GAME_DATA.LEVEL + 1)
+                GameRoom.STATE = GameRoom.STATES.RESTART
+            end
         end
     end
 

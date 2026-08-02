@@ -1,6 +1,6 @@
 GameRoom = Object:extend()
 
-GameRoom.STATES = {GAME = 'game', MENU = 'menu', RESTART = 'restart'}
+GameRoom.STATES = {GAME = 'game', MENU = 'menu', RESTART = 'restart', GAME_OVER = 'game_over', win = 'Win'}
 GameRoom.STATE = GameRoom.STATES.GAME
 
 function GameRoom:new()
@@ -78,6 +78,10 @@ function GameRoom:update(dt)
         go_to_room('GameRoom')
     elseif GameRoom.STATE == GameRoom.STATES.MENU then
         go_to_room('TitleRoom')
+    elseif GameRoom.STATE == GameRoom.STATES.GAME_OVER then
+        go_to_room('GameOverRoom')
+    elseif GameRoom.STATE == GameRoom.STATES.WIN then
+        go_to_room('WinRoom')
     end
 end
 

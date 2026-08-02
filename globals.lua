@@ -22,7 +22,8 @@ GAME_DATA = {
     LEVEL = 1,
     MAX_X = 0,
     MUSIC_VOLUME = 0.2,
-    AUDIO_VOLUME = 0.8
+    AUDIO_VOLUME = 0.8,
+    COUNT_OF_LEVELS = 6
 }
 
 function RESET_GAME_DATA()
@@ -33,7 +34,7 @@ end
 
 function SWITCH_LEVEL(n)
     GAME_DATA.LEVEL = n
-    if n < 5 then
+    if n < 6 then
         PLAYER_DATA.CAN_DOUBLE_JUMP = false
     else
         PLAYER_DATA.CAN_DOUBLE_JUMP = true
@@ -94,6 +95,8 @@ AUDIO_ID = {
     HERO_PUNCH = 'HERO_PUNCH',
     HERO_DEATH = 'HERO_DEATH',
     ORB_COLLECT = 'ORB_COLLECT',
-    KEY_PRESSED = 'KEY_PRESSED'
+    KEY_PRESSED = 'KEY_PRESSED',
+    GAME_OVER = 'GAME_OVER',
+    WIN = "WIN"
 }
 

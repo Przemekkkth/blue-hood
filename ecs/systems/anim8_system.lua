@@ -8,7 +8,11 @@ function Anim8System:update(dt)
         entity.anim8.animations[anim_name]:update(dt)
 
         if entity:has('is_player') and anim_name == 'die' and entity.anim8.animations[anim_name].position == totalFrames then
-            GameRoom.STATE = GameRoom.STATES.RESTART
+            if GAME_DATA.PLAYER_LIFES <= 0 then
+                GameRoom.STATE = GameRoom.STATES.GAME_OVER
+            else
+                GameRoom.STATE = GameRoom.STATES.RESTART
+            end
         end
     end
 end
