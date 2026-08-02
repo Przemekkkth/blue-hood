@@ -12,7 +12,7 @@ function WinRoom:new()
     end)
 
     local g = anim8.newGrid(16, 16, assets.sprites.hero:getWidth(), assets.sprites.hero:getHeight())
-    self.anim8 = anim8.newAnimation(g("1-3", 9), 0.5)
+    self.anim8 = anim8.newAnimation(g("1-3", 8), 0.5)
 
     MUSIC:stop()
     assets.audios[AUDIO_ID.WIN]:play()
