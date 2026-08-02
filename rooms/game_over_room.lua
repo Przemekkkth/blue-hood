@@ -7,8 +7,12 @@ function GameOverRoom:new()
 
     self.timer = Timer()
     self.show_text = false
-    self.timer:every(1.0, function()
-        self.show_text = not self.show_text
+    self.can_continue = false
+    self.timer:after(2.0, function()
+        self.can_continue = true
+        self.timer:every(1.0, function()
+            self.show_text = not self.show_text
+        end)
     end)
 
     local g = anim8.newGrid(16, 16, assets.sprites.hero:getWidth(), assets.sprites.hero:getHeight())
@@ -24,7 +28,7 @@ function GameOverRoom:update(dt)
     self.text_y = math.sin(self.t * 3) * 8
     self.timer:update(dt)
     self.anim8:update(dt)
-    if input:pressed('accept_action') then
+    if input:pressed('accept_action') and self.can_continue then
         go_to_room('TitleRoom')
     end
 end
