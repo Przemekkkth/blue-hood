@@ -80,7 +80,7 @@ function love.load(arg)
 	update_draw_scaling()
 
 	current_room = nil
-    go_to_room('GameOverRoom')
+    go_to_room('WinRoom')
 
 	--tmp
 	camera = Camera(DRAW_WIDTH+16, DRAW_HEIGHT+16)
