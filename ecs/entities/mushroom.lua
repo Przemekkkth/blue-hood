@@ -81,6 +81,16 @@ return function()
         if mushroom.dead then
             collider:destroy()
         end
+
+        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(mushroom.position.x + 3, mushroom.position.y - 2, mushroom.hitbox.w - 2, 2, {'Player'})
+        if #top_collider > 0 then
+            local player = top_collider[1]:getObject()
+            if player:velocity().y > 0 then
+                mushroom:smashed()
+                player:bounce()
+            end
+        end
+
     end
 
     return mushroom

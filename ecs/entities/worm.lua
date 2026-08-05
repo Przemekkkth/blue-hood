@@ -69,6 +69,15 @@ return function()
         if collider:enter('Wall') or collider:enter('Player') then
             worm:flip()
         end
+
+        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(worm.position.x + 3, worm.position.y - 2, worm.hitbox.w - 2, 2, {'Player'})
+        if #top_collider > 0 then
+            local player = top_collider[1]:getObject()
+            if player:velocity().y > 0 then
+                worm:smashed()
+                player:bounce()
+            end
+        end
     end
     
     return worm

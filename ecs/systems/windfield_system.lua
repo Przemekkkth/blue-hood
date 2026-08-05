@@ -22,12 +22,6 @@ function WindfieldSystem:update(dt)
 
     for _, enemy in ipairs(self.enemyPool) do
         enemy:update(dt)
-
-        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(enemy.position.x + 3, enemy.position.y - 2, enemy.hitbox.w - 2, 2, {'Player'})
-        if #top_collider > 0 and self.playerPool[1]:velocity().y > 0 then
-            enemy:smashed()
-            self.playerPool[1]:bounce()
-        end
     end
 
     for _, door in ipairs(self.doorPool) do
