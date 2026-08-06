@@ -9,7 +9,7 @@ return {
   height = 12,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 15,
+  nextlayerid = 16,
   nextobjectid = 180,
   properties = {},
   tilesets = {
@@ -503,10 +503,9 @@ return {
       }
     },
     {
-      type = "objectgroup",
-      draworder = "topdown",
-      id = 7,
-      name = "mushrooms",
+      type = "group",
+      id = 15,
+      name = "enemies",
       class = "",
       visible = true,
       opacity = 1,
@@ -515,7 +514,23 @@ return {
       parallaxx = 1,
       parallaxy = 1,
       properties = {},
-      objects = {}
+      layers = {
+        {
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 7,
+          name = "mushrooms",
+          class = "",
+          visible = true,
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {}
+        }
+      }
     },
     {
       type = "objectgroup",

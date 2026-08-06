@@ -81,7 +81,8 @@ function TileMap:add_door_to_world(world)
 end
 
 function TileMap:add_enemies_to_world(world)
-    local mushroom_layer = self.map.layers['mushrooms']
+
+    local mushroom_layer = self.map.layers["enemies.mushrooms"]
     if mushroom_layer then
         for _, obj in ipairs(mushroom_layer.objects) do
             local mushroom = require 'ecs.entities.worm'()
