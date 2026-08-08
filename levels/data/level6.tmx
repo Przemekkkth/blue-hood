@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="298">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="17" nextobjectid="298">
  <editorsettings>
   <export target="../level6.lua" format="lua"/>
  </editorsettings>
@@ -114,7 +114,10 @@
  <objectgroup id="6" name="door">
   <object id="296" x="16" y="72" width="24" height="24"/>
  </objectgroup>
- <objectgroup id="7" name="mushrooms"/>
+ <group id="15" name="enemies">
+  <objectgroup id="16" name="worms"/>
+  <objectgroup id="7" name="mushrooms"/>
+ </group>
  <objectgroup id="8" name="spikes"/>
  <objectgroup id="9" name="stones"/>
  <objectgroup id="13" name="hint" locked="1">

@@ -1,7 +1,7 @@
 return function()
     local mushroom = ECS.entity()
-
     mushroom.speed = ENEMY_DATA.MUSHROOM_SPEED
+
     mushroom:give('position', 0, 0)
     mushroom:give('hitbox', 14, 14)
     mushroom:give('physics')
@@ -17,13 +17,6 @@ return function()
 
     function mushroom:set_anim(anim_name)
         mushroom.anim8.name = anim_name
-    end
-
-    function mushroom:hit()
-        mushroom.collider.data:setObject(nil)
-        mushroom.dead = true
-        mushroom:remove('physics')
-        mushroom:set_anim('die')
     end
 
     function mushroom:smashed()
@@ -81,6 +74,23 @@ return function()
         if mushroom.dead then
             collider:destroy()
         end
+
+        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(mushroom.position.x + 3, mushroom.position.y - 2, mushroom.hitbox.w - 2, 2, {'Player'})
+        if #top_collider > 0 then
+            local player = top_collider[1]:getObject()
+            if player:velocity().y > 0 then
+                mushroom:smashed()
+                player:bounce()
+            end
+        end
+
+    end
+
+    function mushroom:hit()
+        mushroom.collider.data:setObject(nil)
+        mushroom.dead = true
+        mushroom:remove('physics')
+        mushroom:set_anim('die')
     end
 
     return mushroom

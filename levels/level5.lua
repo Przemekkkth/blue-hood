@@ -9,7 +9,7 @@ return {
   height = 14,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 15,
+  nextlayerid = 17,
   nextobjectid = 273,
   properties = {},
   tilesets = {
@@ -985,10 +985,9 @@ return {
       }
     },
     {
-      type = "objectgroup",
-      draworder = "topdown",
-      id = 7,
-      name = "mushrooms",
+      type = "group",
+      id = 15,
+      name = "enemies",
       class = "",
       visible = true,
       opacity = 1,
@@ -997,48 +996,80 @@ return {
       parallaxx = 1,
       parallaxy = 1,
       properties = {},
-      objects = {
+      layers = {
         {
-          id = 264,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 400,
-          y = 114,
-          width = 14,
-          height = 14,
-          rotation = 0,
-          opacity = 1,
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 16,
+          name = "worms",
+          class = "",
           visible = true,
-          properties = {}
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {
+            {
+              id = 265,
+              name = "",
+              type = "",
+              shape = "rectangle",
+              x = 224,
+              y = 178,
+              width = 14,
+              height = 14,
+              rotation = 0,
+              opacity = 1,
+              visible = true,
+              properties = {}
+            },
+            {
+              id = 266,
+              name = "",
+              type = "",
+              shape = "rectangle",
+              x = 96,
+              y = 178,
+              width = 14,
+              height = 14,
+              rotation = 0,
+              opacity = 1,
+              visible = true,
+              properties = {}
+            }
+          }
         },
         {
-          id = 265,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 224,
-          y = 178,
-          width = 14,
-          height = 14,
-          rotation = 0,
-          opacity = 1,
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 7,
+          name = "mushrooms",
+          class = "",
           visible = true,
-          properties = {}
-        },
-        {
-          id = 266,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 96,
-          y = 178,
-          width = 14,
-          height = 14,
-          rotation = 0,
           opacity = 1,
-          visible = true,
-          properties = {}
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {
+            {
+              id = 264,
+              name = "",
+              type = "",
+              shape = "rectangle",
+              x = 400,
+              y = 114,
+              width = 14,
+              height = 14,
+              rotation = 0,
+              opacity = 1,
+              visible = true,
+              properties = {}
+            }
+          }
         }
       }
     },

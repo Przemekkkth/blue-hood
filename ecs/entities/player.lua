@@ -214,6 +214,10 @@ return function()
             end
 
             player:handle_attack_anim()
+            if collider:enter('Enemy') then
+                player:give('sfx', AUDIO_ID.HERO_DAMAGE)
+                player:hit()
+            end
             return
         end
 

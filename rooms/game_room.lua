@@ -52,6 +52,8 @@ function GameRoom:new()
     self.player:give('position', player_x, player_y)
     self.player:give('collider', self.physics_world:newBSGRectangleCollider(player_x, player_y, self.player.hitbox.w, self.player.hitbox.h, 3))
     self.player.collider.data:setCollisionClass('Player')
+    self.player.collider.data:setObject(self.player)
+    
     self.world:addEntity(self.player)
     table.insert(self.player.hearts_huds, self.hearts_hud0)
     table.insert(self.player.hearts_huds, self.hearts_hud1)

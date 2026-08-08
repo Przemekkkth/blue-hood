@@ -9,7 +9,7 @@ return {
   height = 12,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 15,
+  nextlayerid = 17,
   nextobjectid = 193,
   properties = {},
   tilesets = {
@@ -517,10 +517,9 @@ return {
       }
     },
     {
-      type = "objectgroup",
-      draworder = "topdown",
-      id = 7,
-      name = "mushrooms",
+      type = "group",
+      id = 15,
+      name = "enemies",
       class = "",
       visible = true,
       opacity = 1,
@@ -529,34 +528,66 @@ return {
       parallaxx = 1,
       parallaxy = 1,
       properties = {},
-      objects = {
+      layers = {
         {
-          id = 183,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 367,
-          y = 129,
-          width = 15,
-          height = 15,
-          rotation = 0,
-          opacity = 1,
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 16,
+          name = "worms",
+          class = "",
           visible = true,
-          properties = {}
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {
+            {
+              id = 184,
+              name = "",
+              type = "",
+              shape = "rectangle",
+              x = 352,
+              y = 97,
+              width = 15,
+              height = 15,
+              rotation = 0,
+              opacity = 1,
+              visible = true,
+              properties = {}
+            }
+          }
         },
         {
-          id = 184,
-          name = "",
-          type = "",
-          shape = "rectangle",
-          x = 352,
-          y = 97,
-          width = 15,
-          height = 15,
-          rotation = 0,
-          opacity = 1,
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 7,
+          name = "mushrooms",
+          class = "",
           visible = true,
-          properties = {}
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {
+            {
+              id = 183,
+              name = "",
+              type = "",
+              shape = "rectangle",
+              x = 367,
+              y = 129,
+              width = 15,
+              height = 15,
+              rotation = 0,
+              opacity = 1,
+              visible = true,
+              properties = {}
+            }
+          }
         }
       }
     },
