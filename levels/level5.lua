@@ -9,7 +9,7 @@ return {
   height = 14,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 16,
+  nextlayerid = 17,
   nextobjectid = 273,
   properties = {},
   tilesets = {
@@ -1000,8 +1000,8 @@ return {
         {
           type = "objectgroup",
           draworder = "topdown",
-          id = 7,
-          name = "mushrooms",
+          id = 16,
+          name = "worms",
           class = "",
           visible = true,
           opacity = 1,
@@ -1011,20 +1011,6 @@ return {
           parallaxy = 1,
           properties = {},
           objects = {
-            {
-              id = 264,
-              name = "",
-              type = "",
-              shape = "rectangle",
-              x = 400,
-              y = 114,
-              width = 14,
-              height = 14,
-              rotation = 0,
-              opacity = 1,
-              visible = true,
-              properties = {}
-            },
             {
               id = 265,
               name = "",
@@ -1046,6 +1032,36 @@ return {
               shape = "rectangle",
               x = 96,
               y = 178,
+              width = 14,
+              height = 14,
+              rotation = 0,
+              opacity = 1,
+              visible = true,
+              properties = {}
+            }
+          }
+        },
+        {
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 7,
+          name = "mushrooms",
+          class = "",
+          visible = true,
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {
+            {
+              id = 264,
+              name = "",
+              type = "",
+              shape = "rectangle",
+              x = 400,
+              y = 114,
               width = 14,
               height = 14,
               rotation = 0,

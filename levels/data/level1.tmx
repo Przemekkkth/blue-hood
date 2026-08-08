@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="43">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="43">
  <editorsettings>
   <export target="../level1.lua" format="lua"/>
  </editorsettings>
@@ -81,6 +81,7 @@ SPACE JUMP</property>
   <object id="34" x="32" y="40" width="24" height="24"/>
  </objectgroup>
  <group id="13" name="enemies">
+  <objectgroup id="14" name="worms"/>
   <objectgroup id="6" name="mushrooms">
    <object id="35" x="177" y="98" width="14" height="14"/>
   </objectgroup>

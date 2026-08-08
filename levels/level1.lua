@@ -9,7 +9,7 @@ return {
   height = 10,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 14,
+  nextlayerid = 15,
   nextobjectid = 43,
   properties = {},
   tilesets = {
@@ -345,6 +345,21 @@ return {
       parallaxy = 1,
       properties = {},
       layers = {
+        {
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 14,
+          name = "worms",
+          class = "",
+          visible = true,
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {}
+        },
         {
           type = "objectgroup",
           draworder = "topdown",

@@ -81,15 +81,25 @@ function TileMap:add_door_to_world(world)
 end
 
 function TileMap:add_enemies_to_world(world)
-
     local mushroom_layer = self.map.layers["enemies.mushrooms"]
     if mushroom_layer then
         for _, obj in ipairs(mushroom_layer.objects) do
-            local mushroom = require 'ecs.entities.worm'()
+            local mushroom = require 'ecs.entities.mushroom'()
             mushroom:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(obj.x, obj.y, mushroom.hitbox.w, mushroom.hitbox.h))
             mushroom.collider.data:setCollisionClass('Enemy')
             mushroom.collider.data:setObject(mushroom)
             world:addEntity(mushroom)
+        end
+    end
+
+    local worm_layer = self.map.layers["enemies.worms"]
+    if worm_layer then
+        for _, obj in ipairs(worm_layer.objects) do
+            local worm = require 'ecs.entities.worm'()
+            worm:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(obj.x, obj.y, worm.hitbox.w, worm.hitbox.h))
+            worm.collider.data:setCollisionClass('Enemy')
+            worm.collider.data:setObject(worm)
+            world:addEntity(worm)
         end
     end
 end
