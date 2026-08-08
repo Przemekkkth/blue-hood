@@ -1,7 +1,7 @@
 return function()
     local mushroom = ECS.entity()
-
     mushroom.speed = ENEMY_DATA.MUSHROOM_SPEED
+
     mushroom:give('position', 0, 0)
     mushroom:give('hitbox', 14, 14)
     mushroom:give('physics')
@@ -17,13 +17,6 @@ return function()
 
     function mushroom:set_anim(anim_name)
         mushroom.anim8.name = anim_name
-    end
-
-    function mushroom:hit()
-        mushroom.collider.data:setObject(nil)
-        mushroom.dead = true
-        mushroom:remove('physics')
-        mushroom:set_anim('die')
     end
 
     function mushroom:smashed()
@@ -91,6 +84,13 @@ return function()
             end
         end
 
+    end
+
+    function mushroom:hit()
+        mushroom.collider.data:setObject(nil)
+        mushroom.dead = true
+        mushroom:remove('physics')
+        mushroom:set_anim('die')
     end
 
     return mushroom

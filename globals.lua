@@ -55,7 +55,7 @@ PLAYER_DATA = {
 
 ENEMY_DATA = {
     MUSHROOM_SPEED = 65,
-    WORM_SPEED = 95
+    WORM_SPEED = 75
 }
 
 PHYSICS = {

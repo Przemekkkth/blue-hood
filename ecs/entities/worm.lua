@@ -1,6 +1,6 @@
 return function()
     local worm = ECS.entity()
-    worm.speed = ENEMY_DATA.MUSHROOM_SPEED
+    worm.speed = ENEMY_DATA.WORM_SPEED
 
     worm:give('position', 0, 0)
     worm:give('hitbox', 14, 6)
