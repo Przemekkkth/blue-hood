@@ -9,7 +9,7 @@ return function()
     local g = anim8.newGrid(8, 8, assets.sprites.fauna:getWidth(), assets.sprites.fauna:getHeight())
     walking_bird:give('anim8', {
         run = anim8.newAnimation(g("1-3", 3), 0.1),
-        idle = anim8.newAnimation(g("1-8", 1), 0.3, 'pauseAtEnd')
+        idle = anim8.newAnimation(g("1-8", 1), 0.3)
     }, 'idle')
     
     walking_bird.STATE_TIME = 2.0
