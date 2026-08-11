@@ -39,10 +39,14 @@ return function()
         local w = slime.hitbox.w or 0
         local h = slime.hitbox.h or 0
         local dir = slime.speed > 0 and 1 or -1
+        local y_walk_offset = 0
+        if slime.anim8.name == 'walk' then
+            y_walk_offset = 8
+        end
 
         local ground = WindfieldSystem.PhysicsWorld:queryRectangleArea(
             slime.position.x + slime.hitbox.w / 2 + dir * (slime.hitbox.w / 2 + 2),
-            slime.position.y + slime.hitbox.h + 9,
+            slime.position.y + slime.hitbox.h + 1 + y_walk_offset,
             2,
             2,
             {"Solid"}
@@ -73,7 +77,7 @@ return function()
             slime:flip()
         end
 
-        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(slime.position.x + 3, slime.position.y + 6, slime.hitbox.w - 2, 2, {'Player'})
+        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(slime.position.x + 3, slime.position.y - 2 + y_walk_offset, slime.hitbox.w - 2, 2, {'Player'})
         if #top_collider > 0 then
             local player = top_collider[1]:getObject()
             if player:velocity().y > 0 then
