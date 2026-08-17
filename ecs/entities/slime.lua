@@ -97,11 +97,13 @@ return function()
         if slime.state == slime.states.IDLE then
             slime.state = slime.states.WALK
             slime.anim8.name = 'walk'
+            slime.anim8:reset()
             local dir = slime.speed > 0 and 1 or -1
             slime.collider.data:setLinearVelocity(dir * slime.speed, 0)
         else
             slime.state = slime.states.IDLE
             slime.anim8.name = 'idle'
+            slime.anim8:reset()
             slime.collider.data:setLinearVelocity(0, 0)
         end
     end
