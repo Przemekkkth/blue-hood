@@ -106,7 +106,9 @@ return function()
         end
     end
 
-
+    function slime:hit()
+        
+    end
 
     slime.timer:every(slime.STATE_TIME, function()
         slime:switch_state()
