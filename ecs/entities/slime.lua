@@ -1,6 +1,10 @@
 return function()
     local slime = ECS.entity()
     slime.speed = ENEMY_DATA.SLIME_SPEED
+    slime.STATE_TIME = 2.0
+    slime.states =  {IDLE = 'IDLE', WALK = 'WALK'}
+    slime.state = slime.states.IDLE
+    slime.timer = Timer()
 
     slime:give('position', 0, 0)
     slime:give('hitbox', 14, 14)
@@ -33,6 +37,7 @@ return function()
     end
 
     function slime:update(dt)
+        slime.timer:update(dt)
         local collider = slime.collider.data
         local x, y = collider:getPosition()
         local _, vy = collider:getLinearVelocity()
@@ -69,7 +74,7 @@ return function()
         collider:setPosition(x, y)
 
         slime.position.x = x - w / 2 - PLAYER_DATA.PADDING_X
-        slime.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y - 8
+        slime.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y - y_walk_offset
 
         collider:setLinearVelocity(slime.speed, vy)
 
@@ -81,11 +86,31 @@ return function()
         if #top_collider > 0 then
             local player = top_collider[1]:getObject()
             if player:velocity().y > 0 then
+                slime.position.y  = slime.position.y + y_walk_offset
                 slime:smashed()
                 player:bounce()
             end
         end
     end
+
+    function slime:switch_state()
+        if slime.state == slime.states.IDLE then
+            slime.state = slime.states.WALK
+            slime.anim8.name = 'walk'
+            local dir = slime.speed > 0 and 1 or -1
+            slime.collider.data:setLinearVelocity(dir * slime.speed, 0)
+        else
+            slime.state = slime.states.IDLE
+            slime.anim8.name = 'idle'
+            slime.collider.data:setLinearVelocity(0, 0)
+        end
+    end
+
+
+
+    slime.timer:every(slime.STATE_TIME, function()
+        slime:switch_state()
+    end)
 
     return slime
 end
