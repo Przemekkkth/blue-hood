@@ -1,6 +1,7 @@
 return function()
     local slime = ECS.entity()
     slime.speed = ENEMY_DATA.SLIME_SPEED
+    slime.last_speed = slime.speed
     slime.STATE_TIME = 2.0
     slime.states =  {IDLE = 'IDLE', WALK = 'WALK'}
     slime.state = slime.states.IDLE
@@ -37,6 +38,7 @@ return function()
     end
 
     function slime:update(dt)
+        --print('anim8 ', slime.anim8.name)
         slime.timer:update(dt)
         local collider = slime.collider.data
         local x, y = collider:getPosition()
@@ -95,21 +97,32 @@ return function()
 
     function slime:switch_state()
         if slime.state == slime.states.IDLE then
-            slime.state = slime.states.WALK
-            slime.anim8.name = 'walk'
-            slime.anim8:reset()
-            local dir = slime.speed > 0 and 1 or -1
-            slime.collider.data:setLinearVelocity(dir * slime.speed, 0)
+            slime:set_walk_state()
         else
-            slime.state = slime.states.IDLE
-            slime.anim8.name = 'idle'
-            slime.anim8:reset()
-            slime.collider.data:setLinearVelocity(0, 0)
+            slime:set_idle_state()
         end
     end
 
     function slime:hit()
         
+    end
+
+    function slime:set_walk_state()
+        slime.state = slime.states.WALK
+        slime.anim8.name = 'walk'
+        slime.anim8:reset()
+        slime.speed = slime.last_speed
+        local dir = slime.speed > 0 and 1 or -1
+        slime.collider.data:setLinearVelocity(dir * slime.speed, 0)
+    end
+
+    function slime:set_idle_state()
+        slime.state = slime.states.IDLE
+        slime.anim8.name = 'idle'
+        slime.anim8:reset()
+        slime.last_speed = slime.speed
+        slime.speed = 0
+        slime.collider.data:setLinearVelocity(0, 0)
     end
 
     slime.timer:every(slime.STATE_TIME, function()
