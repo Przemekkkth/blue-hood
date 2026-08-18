@@ -17,8 +17,8 @@ return function()
     local g1 = anim8.newGrid(16, 16, assets.sprites.slime:getWidth(), assets.sprites.slime:getHeight())
 
     slime:give('anim8', {
-        walk = anim8.newAnimation(g("1-15", 1), 0.2),
-        idle = anim8.newAnimation(g1("1-6", 4), 1.0),
+        walk = anim8.newAnimation(g("1-15", 1), 0.1),
+        idle = anim8.newAnimation(g1("1-5", 4), 0.25),
         dead = anim8.newAnimation(g1("1-5", 3), 1.0, 'pauseAtEnd')
     }, 'walk')
 
@@ -38,7 +38,6 @@ return function()
     end
 
     function slime:update(dt)
-        --print('anim8 ', slime.anim8.name)
         slime.timer:update(dt)
         local collider = slime.collider.data
         local x, y = collider:getPosition()
@@ -84,8 +83,9 @@ return function()
             slime:flip()
         end
 
+        local is_sensitive = (slime.anim8.name == 'idle')
         local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(slime.position.x + 3, slime.position.y - 2 + y_walk_offset, slime.hitbox.w - 2, 2, {'Player'})
-        if #top_collider > 0 then
+        if #top_collider > 0 and is_sensitive then
             local player = top_collider[1]:getObject()
             if player:velocity().y > 0 then
                 slime.position.y  = slime.position.y + y_walk_offset
