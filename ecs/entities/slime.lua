@@ -6,6 +6,7 @@ return function()
     slime.states =  {IDLE = 'IDLE', WALK = 'WALK'}
     slime.state = slime.states.IDLE
     slime.timer = Timer()
+    slime.lifes = 2
 
     slime:give('position', 0, 0)
     slime:give('hitbox', 14, 14)
@@ -27,6 +28,10 @@ return function()
     end
 
     function slime:smashed()
+        slime.lifes = slime.lifes - 1
+        if slime.lifes > 0 then
+            return
+        end
         slime:remove('physics')
         slime.collider.data:destroy()
         slime:set_anim('dead')
