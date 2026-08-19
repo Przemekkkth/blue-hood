@@ -102,6 +102,17 @@ function TileMap:add_enemies_to_world(world)
             world:addEntity(worm)
         end
     end
+
+    local slime_layer = self.map.layers["enemies.slimes"]
+    if slime_layer then
+        for _, obj in ipairs(slime_layer.objects) do
+            local slime = require 'ecs.entities.slime'()
+            slime:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(obj.x, obj.y, slime.hitbox.w, slime.hitbox.h))
+            slime.collider.data:setCollisionClass('Enemy')
+            slime.collider.data:setObject(slime)
+            world:addEntity(slime)
+        end
+    end
 end
 
 function TileMap:add_spikes_to_world(world)

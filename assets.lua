@@ -9,7 +9,8 @@ assets.sprites = {
     orbs = love.graphics.newImage("assets/sprites/orbs_spritesheet.png"),
     torch = love.graphics.newImage("assets/sprites/tiki_torch_spritesheet.png"),
     fauna = love.graphics.newImage("assets/sprites/fauna_spritesheet.png"),
-    worm = love.graphics.newImage("assets/sprites/worm_spritesheet.png")
+    worm = love.graphics.newImage("assets/sprites/worm_spritesheet.png"),
+    slime = love.graphics.newImage("assets/sprites/slime_spritesheet.png")
 }
 
 assets.hud = {
