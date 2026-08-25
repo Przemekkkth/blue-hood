@@ -82,7 +82,6 @@ return function()
     function goblin:idle()
         local collider = goblin.collider.data
         local x, y = collider:getPosition()
-        local _, vy = collider:getLinearVelocity()
         local w = goblin.hitbox.w or 0
         local h = goblin.hitbox.h or 0
         collider:setPosition(x, y)
@@ -157,6 +156,30 @@ return function()
 
         if collider:enter('Wall') or collider:enter('Player') then
             goblin:flip()
+        end
+
+        local sword = {}
+        if dir > 0 then
+            sword = WindfieldSystem.PhysicsWorld:queryRectangleArea(
+                x + w / 2 - 3,
+                y,
+                3,
+                2,
+                {"Player"}
+            )
+        else
+            sword = WindfieldSystem.PhysicsWorld:queryRectangleArea(
+                x - w / 2 - 1,
+                y,
+                3,
+                2,
+                {"Player"}
+            )
+        end
+
+        if #sword > 0 then
+            local player = sword[1]:getObject()
+            player:die()
         end
     end
 
