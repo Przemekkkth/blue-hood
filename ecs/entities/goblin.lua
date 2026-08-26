@@ -8,6 +8,7 @@ return function()
     goblin.ATTACK_TIME = 0.5
     goblin.time = 0
     goblin.is_pushed = false
+    goblin.attack_force = 15
 
     goblin:give('position', 0, 0)
     goblin:give('hitbox', 14, 14)
@@ -18,11 +19,11 @@ return function()
     local g = anim8.newGrid(16, 16, assets.sprites.goblin:getWidth(), assets.sprites.goblin:getHeight())
     local g1 = anim8.newGrid(24, 16, assets.sprites.goblin:getWidth(), assets.sprites.goblin:getHeight())
     goblin:give('anim8', {
-        walk = anim8.newAnimation(g("1-6", 1), 0.2),
+        run = anim8.newAnimation(g("1-6", 1), 0.2),
         die = anim8.newAnimation(g("1-6", 2), 0.2, 'pauseAtEnd'),
         attack = anim8.newAnimation(g1("1-4", 3), 0.5, 'pauseAtEnd'),
         idle = anim8.newAnimation(g("1-6", 4), 0.2),
-    }, 'walk')
+    }, 'run')
 
   
     function goblin:set_anim(anim_name)
@@ -50,26 +51,27 @@ return function()
         if goblin.state == goblin.STATES.IDLE and goblin.time > goblin.IDLE_TIME then
             goblin.time = 0
             goblin.state = goblin.STATES.RUN
-
             goblin.anim8:reset()
-            goblin:set_anim('walk')
+            goblin:set_anim('run')
         elseif goblin.state == goblin.STATES.RUN and goblin.time > goblin.RUN_TIME then
             goblin.state = goblin.STATES.ATTACK
             goblin.time = 0
-
             goblin.is_pushed = false
             goblin.anim8:reset()
             goblin:set_anim('attack')
         elseif goblin.state == goblin.STATES.ATTACK and goblin.time > goblin.ATTACK_TIME then
             goblin.time = 0
             goblin.state = goblin.STATES.IDLE
-
             goblin.anim8:reset()
             goblin:set_anim('idle')
         end
     end
 
     function goblin:handle_state(dt)
+        if goblin.dead then
+            return
+        end
+
         if goblin.state == goblin.STATES.IDLE then
             goblin:idle()
         elseif goblin.state == goblin.STATES.RUN then
@@ -133,9 +135,6 @@ return function()
             goblin:flip()
         end
 
-        if goblin.dead then
-            collider:destroy()
-        end
     end
 
     function goblin:attack()
@@ -144,14 +143,16 @@ return function()
         local w = 22
         local h = 14
         local dir = goblin.speed > 0 and 1 or -1
+        local sprite_x_offset = 5
+
         collider:setPosition(x, y)
 
-        goblin.position.x = x - w / 2 + PLAYER_DATA.PADDING_X + dir * 5
+        goblin.position.x = x - w / 2 + PLAYER_DATA.PADDING_X + dir * sprite_x_offset
         goblin.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
 
         if not goblin.is_pushed then
             goblin.is_pushed = true
-            collider:applyLinearImpulse(dir * 15, 0)
+            collider:applyLinearImpulse(dir * goblin.attack_force, 0)
         end
 
         if collider:enter('Wall') or collider:enter('Player') then
@@ -161,12 +162,9 @@ return function()
         local sword = {}
         if dir > 0 then
             sword = WindfieldSystem.PhysicsWorld:queryRectangleArea(
-                x + w / 2 - 3,
-                y,
-                3,
-                2,
-                {"Player"}
-            )
+                x + w / 2 - 3, y,
+                3, 2,
+                {"Player"})
         else
             sword = WindfieldSystem.PhysicsWorld:queryRectangleArea(
                 x - w / 2 - 1,
@@ -185,6 +183,7 @@ return function()
 
     function goblin:hit()
         goblin.collider.data:setObject(nil)
+        goblin.collider.data:destroy()
         goblin.dead = true
         goblin:remove('physics')
         goblin:set_anim('die')
