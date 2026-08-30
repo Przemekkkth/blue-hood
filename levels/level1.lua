@@ -9,7 +9,7 @@ return {
   height = 10,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 17,
+  nextlayerid = 19,
   nextobjectid = 43,
   properties = {},
   tilesets = {
@@ -348,8 +348,23 @@ return {
         {
           type = "objectgroup",
           draworder = "topdown",
-          id = 16,
-          name = "goblins",
+          id = 17,
+          name = "blue_flies",
+          class = "",
+          visible = true,
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {}
+        },
+        {
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 18,
+          name = "orange_flies",
           class = "",
           visible = true,
           opacity = 1,
@@ -374,6 +389,21 @@ return {
               properties = {}
             }
           }
+        },
+        {
+          type = "objectgroup",
+          draworder = "topdown",
+          id = 16,
+          name = "goblins",
+          class = "",
+          visible = true,
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {}
         },
         {
           type = "objectgroup",
