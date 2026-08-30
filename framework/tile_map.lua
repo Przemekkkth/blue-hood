@@ -124,6 +124,30 @@ function TileMap:add_enemies_to_world(world)
             world:addEntity(goblin)
         end
     end
+
+    local blue_fly_layer = self.map.layers["enemies.blue_flies"]
+    if blue_fly_layer then
+        for _, obj in ipairs(blue_fly_layer.objects) do
+            local blue_fly = require 'ecs.entities.blue_fly'()
+            blue_fly:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(obj.x, obj.y, blue_fly.hitbox.w, blue_fly.hitbox.h))
+            blue_fly.collider.data:setCollisionClass('Enemy')
+            blue_fly.collider.data:setObject(blue_fly)
+            blue_fly.collider.data:setGravityScale(0)
+            world:addEntity(blue_fly)
+        end
+    end
+
+    local orange_fly_layer = self.map.layers["enemies.orange_flies"]
+    if orange_fly_layer then
+        for _, obj in ipairs(orange_fly_layer.objects) do
+            local orange_fly = require 'ecs.entities.orange_fly'()
+            orange_fly:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(obj.x, obj.y, orange_fly.hitbox.w, orange_fly.hitbox.h))
+            orange_fly.collider.data:setCollisionClass('Enemy')
+            orange_fly.collider.data:setObject(orange_fly)
+            orange_fly.collider.data:setGravityScale(0)
+            world:addEntity(orange_fly)
+        end
+    end
 end
 
 function TileMap:add_spikes_to_world(world)
