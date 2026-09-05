@@ -1,6 +1,5 @@
 return function()
     local bomber_goblin = ECS.entity()
-    bomber_goblin.speed = ENEMY_DATA.BOMBER_GOBLIN_SPEED
     bomber_goblin.STATES = {IDLE = 'IDLE', ATTACK = 'ATTACK'}
     bomber_goblin.state = bomber_goblin.STATES.IDLE
     bomber_goblin.IDLE_TIME = 0.4
@@ -28,8 +27,7 @@ return function()
     end
 
     function bomber_goblin:flip()
-        bomber_goblin.speed = -bomber_goblin.speed
-        bomber_goblin.sprite.flipped_h = bomber_goblin.speed > 0
+        bomber_goblin.sprite.flipped_h = not bomber_goblin.sprite.flipped_h
     end
 
     function bomber_goblin:update(dt)
@@ -78,7 +76,7 @@ return function()
     end
 
     function bomber_goblin:attack()
-        
+        bomber_goblin:focus_on_player()
     end
 
     function bomber_goblin:hit()
@@ -87,6 +85,15 @@ return function()
         bomber_goblin.dead = true
         bomber_goblin:remove('physics')
         bomber_goblin:set_anim('die')
+    end
+
+    function bomber_goblin:focus_on_player()
+        local w = 14
+        if WindfieldSystem.PlayerPos.x + w < bomber_goblin.position.x then
+            bomber_goblin.sprite.flipped_h = true
+        elseif WindfieldSystem.PlayerPos.x + w > bomber_goblin.position.x + w then
+            bomber_goblin.sprite.flipped_h = false
+        end
     end
 
     return bomber_goblin

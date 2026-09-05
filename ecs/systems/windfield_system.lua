@@ -3,6 +3,8 @@ WindfieldSystem = ECS.system({playerPool = {'is_player', 'physics'}, enemyPool =
                               hintPool = {'hint', 'physics'}, faunaPool = {'fauna', 'physics'} })
 WindfieldSystem.PhysicsWorld = nil
 WindfieldSystem.Gravity = {x = 0, y = PHYSICS.GRAVITY}
+WindfieldSystem.PlayerPos = {}
+
 
 function WindfieldSystem:init(world)
     if WindfieldSystem.PhysicsWorld == nil then
@@ -18,6 +20,7 @@ function WindfieldSystem:update(dt)
 
     for _, player in ipairs(self.playerPool) do
         player:update(dt)
+        WindfieldSystem.PlayerPos = player.position
     end
 
     for _, enemy in ipairs(self.enemyPool) do
