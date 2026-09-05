@@ -12,7 +12,8 @@ assets.sprites = {
     worm = love.graphics.newImage("assets/sprites/worm_spritesheet.png"),
     slime = love.graphics.newImage("assets/sprites/slime_spritesheet.png"),
     goblin = love.graphics.newImage("assets/sprites/goblin_spritesheet.png"),
-    fly = love.graphics.newImage("assets/sprites/fly_spritesheet.png")
+    fly = love.graphics.newImage("assets/sprites/fly_spritesheet.png"),
+    bomber_goblin = love.graphics.newImage("assets/sprites/goblin_bomber_spritesheet.png"),
 }
 
 assets.hud = {
