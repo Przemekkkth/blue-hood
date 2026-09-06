@@ -35,6 +35,9 @@ ECS.component('anim8', function(component, animations, name)
     component.reset = function()
         component.animations[component.name]:gotoFrame(1)
     end
+    component.get_position = function()
+        return component.animations[component.name].position
+    end
 end)
 
 ECS.component('is_player')
@@ -58,6 +61,7 @@ ECS.component('stone')
 ECS.component('HUD')
 ECS.component('invincible')
 ECS.component('hint')
+ECS.component('bomb')
 
 ECS.component('text', function(component, data, font, size)
     component.data = data

@@ -4,6 +4,7 @@ return function()
     bomber_goblin.state = bomber_goblin.STATES.IDLE
     bomber_goblin.IDLE_TIME = 0.4
     bomber_goblin.ATTACK_TIME = 1.2
+    bomber_goblin.THROWING_BOMB_FRAME = 5
     bomber_goblin.time = 0
 
     bomber_goblin:give('position', 0, 0)
@@ -77,6 +78,9 @@ return function()
 
     function bomber_goblin:attack()
         bomber_goblin:focus_on_player()
+        if bomber_goblin.anim8:get_position() == bomber_goblin.THROWING_BOMB_FRAME then
+            bomber_goblin:create_bomb()
+        end
     end
 
     function bomber_goblin:hit()
@@ -94,6 +98,15 @@ return function()
         elseif WindfieldSystem.PlayerPos.x + w > bomber_goblin.position.x + w then
             bomber_goblin.sprite.flipped_h = false
         end
+    end
+
+    function bomber_goblin:create_bomb()
+        local offset_x = 0
+        if bomber_goblin.sprite.flipped_h then
+            offset_x = 6
+        end
+
+        require 'ecs.entities.bomb'(bomber_goblin.position.x + offset_x, bomber_goblin.position.y - 8, false, bomber_goblin:getWorld())
     end
 
     return bomber_goblin
