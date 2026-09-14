@@ -81,7 +81,6 @@ return function()
     function bomber_goblin:attack()
         bomber_goblin:focus_on_player()
         if bomber_goblin.anim8:get_position() == bomber_goblin.THROWING_BOMB_FRAME and not bomber_goblin.is_bomb_thrown then
-            print('create a bomb')
             bomber_goblin.is_bomb_thrown = true
             bomber_goblin:create_bomb()
         end
