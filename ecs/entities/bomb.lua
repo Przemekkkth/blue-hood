@@ -31,7 +31,7 @@ return function(x, y, dir, world)
     bomb:give('anim8', {
         throw = anim8.newAnimation(g("1-3", 1), 0.2),
         landing = anim8.newAnimation(g("1-3", 2), 0.2),
-        explosion = anim8.newAnimation(g1("1-10", 2), 0.1),
+        explosion = anim8.newAnimation(g1("1-10", 2), 0.1, 'pauseAtEnd'),
     }, 'throw')
 
     function bomb:set_anim(anim_name)
@@ -56,9 +56,6 @@ return function(x, y, dir, world)
             bomb.state = bomb.STATES.EXPLOSION
             bomb:set_anim('explosion')
             bomb.anim8:reset()
-        elseif bomb.state == bomb.STATES.EXPLOSION and bomb.time > bomb.EXPLOSION_TIME then
-            bomb.time = 0
-
         end
     end
 
@@ -98,17 +95,18 @@ return function(x, y, dir, world)
 
     function bomb:explosion()
         local x, y
-        if bomb:has('physics') then
+        if bomb:has('collider') then
             local collider = bomb.collider.data
             x, y = collider:getPosition()
-            bomb:remove('physics')
+            --bomb:remove('physics')
             collider:destroy()
             bomb:remove('collider')
             bomb.position.x = x - 16
             bomb.position.y = y - 27
+            bomb:give('delayed_callback', function()
+                bomb.sprite.visible = false
+            end, bomb.EXPLOSION_TIME)
         end
-
-
     end
 
     return bomb

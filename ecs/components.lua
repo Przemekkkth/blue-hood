@@ -19,6 +19,7 @@ ECS.component('sprite', function(component, spritesheet, ox, oy)
     component.flipped_h = false
     component.flipped_v = false
     component.order = 0
+    component.visible = true
 end)
 
 

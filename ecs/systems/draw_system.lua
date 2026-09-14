@@ -8,6 +8,10 @@ function DrawSystem:draw()
 
             local sprite = entity.sprite.spritesheet
 
+            if not entity.sprite.visible then
+                break
+            end
+
             if entity:has('anim8') then
                 local anim_name = entity.anim8.name
                 local frame_w, frame_h = entity.anim8.animations[anim_name]:getDimensions()
