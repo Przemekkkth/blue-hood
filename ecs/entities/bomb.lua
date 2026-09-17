@@ -98,14 +98,24 @@ return function(x, y, dir, world)
         if bomb:has('collider') then
             local collider = bomb.collider.data
             x, y = collider:getPosition()
-            --bomb:remove('physics')
             collider:destroy()
             bomb:remove('collider')
             bomb.position.x = x - 16
             bomb.position.y = y - 27
             bomb:give('delayed_callback', function()
                 bomb.sprite.visible = false
+                bomb.dead = true
             end, bomb.EXPLOSION_TIME)
+        end
+
+        local explosion_hits = WindfieldSystem.PhysicsWorld:queryRectangleArea(
+            bomb.position.x + 8,
+            bomb.position.y + 8,
+            20,
+            20, {'Player'})
+        if #explosion_hits > 0 then
+            local player = explosion_hits[1]:getObject()
+            player:hit()
         end
     end
 
