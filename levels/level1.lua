@@ -9,7 +9,7 @@ return {
   height = 10,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 19,
+  nextlayerid = 20,
   nextobjectid = 43,
   properties = {},
   tilesets = {
@@ -348,6 +348,36 @@ return {
         {
           type = "objectgroup",
           draworder = "topdown",
+          id = 19,
+          name = "bomber_goblins",
+          class = "",
+          visible = true,
+          opacity = 1,
+          offsetx = 0,
+          offsety = 0,
+          parallaxx = 1,
+          parallaxy = 1,
+          properties = {},
+          objects = {
+            {
+              id = 35,
+              name = "",
+              type = "",
+              shape = "rectangle",
+              x = 219,
+              y = 98,
+              width = 14,
+              height = 14,
+              rotation = 0,
+              opacity = 1,
+              visible = true,
+              properties = {}
+            }
+          }
+        },
+        {
+          type = "objectgroup",
+          draworder = "topdown",
           id = 17,
           name = "blue_flies",
           class = "",
@@ -373,22 +403,7 @@ return {
           parallaxx = 1,
           parallaxy = 1,
           properties = {},
-          objects = {
-            {
-              id = 35,
-              name = "",
-              type = "",
-              shape = "rectangle",
-              x = 219,
-              y = 98,
-              width = 14,
-              height = 14,
-              rotation = 0,
-              opacity = 1,
-              visible = true,
-              properties = {}
-            }
-          }
+          objects = {}
         },
         {
           type = "objectgroup",

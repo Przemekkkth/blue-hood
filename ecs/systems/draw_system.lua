@@ -8,30 +8,32 @@ function DrawSystem:draw()
 
             local sprite = entity.sprite.spritesheet
 
-            if entity:has('anim8') then
-                local anim_name = entity.anim8.name
-                local frame_w, frame_h = entity.anim8.animations[anim_name]:getDimensions()
-                local should_draw = true
-
-                if entity:has('invincible') and math.floor(love.timer.getTime() * 10) % 2 == 0 then
-                    should_draw = false
-                end
-
-                if entity.sprite.flipped_h and should_draw then    
-                    entity.anim8.animations[anim_name]:draw(sprite, x, y, 0, -1, 1, frame_w, 0)
-                elseif entity.sprite.flipped_v and should_draw then
-                    entity.anim8.animations[anim_name]:draw(sprite, x, y, 0, 1, -1, 0, frame_h)
-                elseif should_draw then
-                    entity.anim8.animations[anim_name]:draw(sprite, x, y)
-                end
-
-            else
-                local x = math.floor(entity.position.x)
-                local y = math.floor(entity.position.y)
-                if entity.sprite.flipped_v then
-                    love.graphics.draw(sprite, x, y, 0, 1, -1, 0, sprite:getHeight())
+            if entity.sprite.visible then
+                if entity:has('anim8') then
+                    local anim_name = entity.anim8.name
+                    local frame_w, frame_h = entity.anim8.animations[anim_name]:getDimensions()
+                    local should_draw = true
+    
+                    if entity:has('invincible') and math.floor(love.timer.getTime() * 10) % 2 == 0 then
+                        should_draw = false
+                    end
+    
+                    if entity.sprite.flipped_h and should_draw then    
+                        entity.anim8.animations[anim_name]:draw(sprite, x, y, 0, -1, 1, frame_w, 0)
+                    elseif entity.sprite.flipped_v and should_draw then
+                        entity.anim8.animations[anim_name]:draw(sprite, x, y, 0, 1, -1, 0, frame_h)
+                    elseif should_draw then
+                        entity.anim8.animations[anim_name]:draw(sprite, x, y)
+                    end
+    
                 else
-                    love.graphics.draw(sprite, x, y)
+                    local x = math.floor(entity.position.x)
+                    local y = math.floor(entity.position.y)
+                    if entity.sprite.flipped_v then
+                        love.graphics.draw(sprite, x, y, 0, 1, -1, 0, sprite:getHeight())
+                    else
+                        love.graphics.draw(sprite, x, y)
+                    end
                 end
             end
         end

@@ -19,6 +19,7 @@ ECS.component('sprite', function(component, spritesheet, ox, oy)
     component.flipped_h = false
     component.flipped_v = false
     component.order = 0
+    component.visible = true
 end)
 
 
@@ -34,6 +35,9 @@ ECS.component('anim8', function(component, animations, name)
     end
     component.reset = function()
         component.animations[component.name]:gotoFrame(1)
+    end
+    component.get_position = function()
+        return component.animations[component.name].position
     end
 end)
 
@@ -58,6 +62,7 @@ ECS.component('stone')
 ECS.component('HUD')
 ECS.component('invincible')
 ECS.component('hint')
+ECS.component('bomb')
 
 ECS.component('text', function(component, data, font, size)
     component.data = data
