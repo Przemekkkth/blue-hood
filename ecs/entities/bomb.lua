@@ -1,8 +1,8 @@
 return function(x, y, dir, world)
     local bomb = ECS.entity(world)
     bomb.THROW_FORCE = {x = 16, y = -8}
-    bomb.THROW_TIME = 3.0
-    bomb.LANDING_TIME = 2.0
+    bomb.THROW_TIME = 1.0
+    bomb.LANDING_TIME = 1.0
     bomb.EXPLOSION_TIME = 1.0
     bomb.STATES = {THROW = 'THROW', LANDING = 'LANDING', EXPLOSION = 'EXPLOSION'}
 

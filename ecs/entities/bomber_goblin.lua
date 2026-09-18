@@ -3,7 +3,7 @@ return function()
     bomber_goblin.STATES = {IDLE = 'IDLE', ATTACK = 'ATTACK'}
     bomber_goblin.state = bomber_goblin.STATES.IDLE
     bomber_goblin.IDLE_TIME = 0.4
-    bomber_goblin.ATTACK_TIME = 1.2
+    bomber_goblin.ATTACK_TIME = 3.5
     bomber_goblin.THROWING_BOMB_FRAME = 5
     bomber_goblin.time = 0
     bomber_goblin.is_bomb_thrown = false
@@ -19,7 +19,7 @@ return function()
     local g = anim8.newGrid(16, 16, assets.sprites.bomber_goblin:getWidth(), assets.sprites.bomber_goblin:getHeight())
     
     bomber_goblin:give('anim8', {
-        attack = anim8.newAnimation(g("1-6", 1), 0.2),
+        attack = anim8.newAnimation(g("1-6", 1), 0.6),
         die = anim8.newAnimation(g("1-6", 2), 0.2, 'pauseAtEnd'),
         idle = anim8.newAnimation(g("1-3", 3), 0.1),
     }, 'idle')
