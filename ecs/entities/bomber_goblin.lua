@@ -1,27 +1,32 @@
 return function()
     local bomber_goblin = ECS.entity()
-    bomber_goblin.STATES = {IDLE = 'IDLE', ATTACK = 'ATTACK'}
-    bomber_goblin.state = bomber_goblin.STATES.IDLE
-    bomber_goblin.IDLE_TIME = 0.4
+
     bomber_goblin.ATTACK_TIME = 3.5
+    bomber_goblin.DIE_TIME = 0.2
+    bomber_goblin.IDLE_TIME = 0.4
+    bomber_goblin.SIZE = 14
+    bomber_goblin.STATES = {IDLE = 'IDLE', ATTACK = 'ATTACK'}
     bomber_goblin.THROWING_BOMB_FRAME = 5
+
+    bomber_goblin.state = bomber_goblin.STATES.IDLE
     bomber_goblin.time = 0
     bomber_goblin.is_bomb_thrown = false
 
-    bomber_goblin:give('position', 0, 0)
-    bomber_goblin:give('hitbox', 14, 14)
+    bomber_goblin:give('position')
+    bomber_goblin:give('hitbox', bomber_goblin.SIZE, bomber_goblin.SIZE)
     bomber_goblin:give('physics')
-    bomber_goblin:give('sprite', assets.sprites.bomber_goblin, 0, 0)
+    bomber_goblin:give('sprite', assets.sprites.bomber_goblin)
     bomber_goblin.sprite.flipped_h = true
 
     bomber_goblin:give('enemy')
 
-    local g = anim8.newGrid(16, 16, assets.sprites.bomber_goblin:getWidth(), assets.sprites.bomber_goblin:getHeight())
+    local frame_width, frame_height = 16, 16
+    local g = anim8.newGrid(frame_width, frame_height, assets.sprites.bomber_goblin:getWidth(), assets.sprites.bomber_goblin:getHeight())
     
     bomber_goblin:give('anim8', {
-        attack = anim8.newAnimation(g("1-6", 1), 0.6),
-        die = anim8.newAnimation(g("1-6", 2), 0.2, 'pauseAtEnd'),
-        idle = anim8.newAnimation(g("1-3", 3), 0.1),
+        attack = anim8.newAnimation(g("1-6", 1), bomber_goblin.ATTACK_TIME / 6),
+        die = anim8.newAnimation(g("1-6", 2), bomber_goblin.DIE_TIME, 'pauseAtEnd'),
+        idle = anim8.newAnimation(g("1-3", 3), bomber_goblin.IDLE_TIME / 3),
     }, 'idle')
   
     function bomber_goblin:set_anim(anim_name)
@@ -39,6 +44,7 @@ return function()
 
     function bomber_goblin:update_state(dt)
         bomber_goblin.time = bomber_goblin.time + dt
+
         if bomber_goblin.state == bomber_goblin.STATES.IDLE and bomber_goblin.time > bomber_goblin.IDLE_TIME then
             bomber_goblin.time = 0
             bomber_goblin.state = bomber_goblin.STATES.ATTACK
@@ -68,12 +74,10 @@ return function()
     function bomber_goblin:idle()
         local collider = bomber_goblin.collider.data
         local x, y = collider:getPosition()
-        local w = bomber_goblin.hitbox.w or 0
-        local h = bomber_goblin.hitbox.h or 0
         collider:setPosition(x, y)
 
-        bomber_goblin.position.x = x - w / 2 + PLAYER_DATA.PADDING_X
-        bomber_goblin.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        bomber_goblin.position.x = x - bomber_goblin.SIZE / 2
+        bomber_goblin.position.y = y - bomber_goblin.SIZE / 2
 
         collider:setLinearVelocity(0, 0)
     end
