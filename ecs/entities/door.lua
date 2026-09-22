@@ -2,14 +2,16 @@ return function()
     local door = ECS.entity()
 
     door:give('sprite', assets.sprites.door)
-    door:give('position', 0, 0)
+    door:give('position')
 
     function door:update(dt)
+        local offset = 10
+        local size = 5
         local player_hits = WindfieldSystem.PhysicsWorld:queryRectangleArea(
-            door.position.x + 10,
-            door.position.y + 10,
-            5,
-            5,
+            door.position.x + offset,
+            door.position.y + offset,
+            size,
+            size,
             {'Player'}
         )
 
