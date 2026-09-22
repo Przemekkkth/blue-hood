@@ -1,13 +1,16 @@
 return function(x, y, dir, world)
     local bomb = ECS.entity(world)
-    bomb.THROW_FORCE = {x = 16, y = -8}
-    bomb.THROW_TIME = 1.0
-    bomb.LANDING_TIME = 1.0
+
+    bomb.EXPLOSION_SIZE = 32
     bomb.EXPLOSION_TIME = 1.0
-    bomb.STATES = {THROW = 'THROW', LANDING = 'LANDING', EXPLOSION = 'EXPLOSION'}
+    bomb.LANDING_TIME = 1.0
+    bomb.SIZE = 8
+    bomb.STATES = {THROWING = 'THROWING', LANDING = 'LANDING', EXPLOSION = 'EXPLOSION'}
+    bomb.THROWING_FORCE = {x = 16, y = -8}
+    bomb.THROWING_TIME = 1.0
 
     bomb.time = 0
-    bomb.state = bomb.STATES.THROW
+    bomb.state = bomb.STATES.THROWING
     bomb.dead = false
 
     bomb:give('position', x, y)
@@ -23,15 +26,15 @@ return function(x, y, dir, world)
     else
         direction = 1
     end
-    bomb.collider.data:applyLinearImpulse(direction * bomb.THROW_FORCE.x, bomb.THROW_FORCE.y)
+    bomb.collider.data:applyLinearImpulse(direction * bomb.THROWING_FORCE.x, bomb.THROWING_FORCE.y)
 
-    local g = anim8.newGrid(8, 8, assets.sprites.bomb:getWidth(), assets.sprites.bomb:getHeight())
-    local g1 = anim8.newGrid(32, 32, assets.sprites.bomb:getWidth(), assets.sprites.bomb:getHeight())
+    local g = anim8.newGrid(bomb.SIZE, bomb.SIZE, assets.sprites.bomb:getWidth(), assets.sprites.bomb:getHeight())
+    local g1 = anim8.newGrid(bomb.EXPLOSION_SIZE, bomb.EXPLOSION_SIZE, assets.sprites.bomb:getWidth(), assets.sprites.bomb:getHeight())
     
     bomb:give('anim8', {
-        throw = anim8.newAnimation(g("1-3", 1), 0.2),
-        landing = anim8.newAnimation(g("1-3", 2), 0.2),
-        explosion = anim8.newAnimation(g1("1-10", 2), 0.1, 'pauseAtEnd'),
+        throw = anim8.newAnimation(g("1-3", 1), bomb.THROWING_TIME / 3),
+        landing = anim8.newAnimation(g("1-3", 2), bomb.LANDING_TIME / 3),
+        explosion = anim8.newAnimation(g1("1-10", 2), bomb.EXPLOSION_TIME / 10, 'pauseAtEnd'),
     }, 'throw')
 
     function bomb:set_anim(anim_name)
@@ -46,7 +49,7 @@ return function(x, y, dir, world)
     function bomb:update_state(dt)
         bomb.time = bomb.time + dt
 
-        if bomb.state == bomb.STATES.THROW and bomb.time > bomb.THROW_TIME then
+        if bomb.state == bomb.STATES.THROWING and bomb.time > bomb.THROWING_TIME then
             bomb.time = 0
             bomb.state = bomb.STATES.LANDING
             bomb:set_anim('landing')
@@ -64,33 +67,22 @@ return function(x, y, dir, world)
             return
         end
 
-        if bomb.state == bomb.STATES.THROW then
-            bomb:throw()
+        if bomb.state == bomb.STATES.THROWING then
+            bomb:throw_or_land()
         elseif bomb.state == bomb.STATES.LANDING then
-            bomb:landing()
+            bomb:throw_or_land()
         elseif bomb.state == bomb.STATES.EXPLOSION then
             bomb:explosion()
         end
     end
 
-    function bomb:throw()
+    function bomb:throw_or_land()
         local collider = bomb.collider.data
         local x, y = collider:getPosition()
-        local w = bomb.hitbox.w or 0
-        local h = bomb.hitbox.h or 0
+        local y_offset = 1
 
-        bomb.position.x = x - w / 2
-        bomb.position.y = y - h / 2
-    end
-
-    function bomb:landing()
-        local collider = bomb.collider.data
-        local x, y = collider:getPosition()
-        local w = bomb.hitbox.w or 0
-        local h = bomb.hitbox.h or 0
-
-        bomb.position.x = x - w / 2
-        bomb.position.y = y - h / 2
+        bomb.position.x = x - bomb.SIZE / 2
+        bomb.position.y = y - bomb.SIZE / 2 + y_offset
     end
 
     function bomb:explosion()
@@ -100,19 +92,23 @@ return function(x, y, dir, world)
             x, y = collider:getPosition()
             collider:destroy()
             bomb:remove('collider')
-            bomb.position.x = x - 16
-            bomb.position.y = y - 27
+
+            bomb.position.x = x - bomb.EXPLOSION_SIZE / 2
+            bomb.position.y = y - bomb.EXPLOSION_SIZE + bomb.SIZE
+            
             bomb:give('delayed_callback', function()
                 bomb.sprite.visible = false
                 bomb.dead = true
             end, bomb.EXPLOSION_TIME)
         end
 
+        local explosion_offset = 8
         local explosion_hits = WindfieldSystem.PhysicsWorld:queryRectangleArea(
-            bomb.position.x + 8,
-            bomb.position.y + 8,
-            20,
-            20, {'Player'})
+            bomb.position.x + explosion_offset,
+            bomb.position.y + explosion_offset,
+            2 * explosion_offset,
+            2 * explosion_offset, {'Player'})
+
         if #explosion_hits > 0 then
             local player = explosion_hits[1]:getObject()
             player:hit()
