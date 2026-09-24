@@ -1,28 +1,34 @@
 return function()
     local goblin = ECS.entity()
-    goblin.speed = ENEMY_DATA.GOBLIN_SPEED
-    goblin.STATES = {IDLE = 'IDLE', ATTACK = 'ATTACK', RUN = 'RUN'}
-    goblin.state = goblin.STATES.IDLE
-    goblin.IDLE_TIME = 0.5
-    goblin.RUN_TIME = 2.0
-    goblin.ATTACK_TIME = 0.5
-    goblin.time = 0
-    goblin.is_pushed = false
-    goblin.attack_force = 15
 
-    goblin:give('position', 0, 0)
-    goblin:give('hitbox', 14, 14)
+    goblin.ATTACK_TIME = 0.5
+    goblin.DIE_TIME = 0.1
+    goblin.IDLE_TIME = 0.8
+    goblin.RUN_TIME = 2.0
+    goblin.SIZE = 14
+    goblin.STATES = {IDLE = 'IDLE', ATTACK = 'ATTACK', RUN = 'RUN'}
+
+    goblin.attack_force = 15
+    goblin.is_pushed = false
+    goblin.speed = ENEMY_DATA.GOBLIN_SPEED
+    goblin.state = goblin.STATES.IDLE
+    goblin.time = 0
+
+    goblin:give('position')
+    goblin:give('hitbox', goblin.SIZE, goblin.SIZE)
     goblin:give('physics')
-    goblin:give('sprite', assets.sprites.goblin, 0, 0)
+    goblin:give('sprite', assets.sprites.goblin)
     goblin:give('enemy')
 
-    local g = anim8.newGrid(16, 16, assets.sprites.goblin:getWidth(), assets.sprites.goblin:getHeight())
-    local g1 = anim8.newGrid(24, 16, assets.sprites.goblin:getWidth(), assets.sprites.goblin:getHeight())
+    local frame_width, frame_height = 16, 16
+    local bigger_frame_width = 24
+    local g = anim8.newGrid(frame_width, frame_height, assets.sprites.goblin:getWidth(), assets.sprites.goblin:getHeight())
+    local g1 = anim8.newGrid(bigger_frame_width, frame_height, assets.sprites.goblin:getWidth(), assets.sprites.goblin:getHeight())
     goblin:give('anim8', {
-        run = anim8.newAnimation(g("1-6", 1), 0.2),
-        die = anim8.newAnimation(g("1-6", 2), 0.2, 'pauseAtEnd'),
-        attack = anim8.newAnimation(g1("1-4", 3), 0.5, 'pauseAtEnd'),
-        idle = anim8.newAnimation(g("1-6", 4), 0.2),
+        run = anim8.newAnimation(g("1-6", 1), goblin.RUN_TIME / 12),
+        die = anim8.newAnimation(g("1-6", 2), goblin.DIE_TIME, 'pauseAtEnd'),
+        attack = anim8.newAnimation(g1("1-4", 3), goblin.ATTACK_TIME / 4, 'pauseAtEnd'),
+        idle = anim8.newAnimation(g("1-4", 4), goblin.IDLE_TIME / 4),
     }, 'run')
 
   
@@ -30,13 +36,8 @@ return function()
         goblin.anim8.name = anim_name
     end
 
-    function goblin:smashed()
-        goblin:remove('physics')
-        goblin.collider.data:destroy()
-        goblin:set_anim('smash')
-    end
-
     function goblin:flip()
+        goblin.collider.data:setLinearVelocity(0, 0)
         goblin.speed = -goblin.speed
         goblin.sprite.flipped_h = goblin.speed < 0
     end
@@ -84,12 +85,11 @@ return function()
     function goblin:idle()
         local collider = goblin.collider.data
         local x, y = collider:getPosition()
-        local w = goblin.hitbox.w or 0
-        local h = goblin.hitbox.h or 0
+
         collider:setPosition(x, y)
 
-        goblin.position.x = x - w / 2 + PLAYER_DATA.PADDING_X
-        goblin.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        goblin.position.x = x - goblin.SIZE / 2
+        goblin.position.y = y - goblin.SIZE / 2 - PLAYER_DATA.PADDING_Y
 
         collider:setLinearVelocity(0, 0)
     end
@@ -98,36 +98,12 @@ return function()
         local collider = goblin.collider.data
         local x, y = collider:getPosition()
         local _, vy = collider:getLinearVelocity()
-        local w = goblin.hitbox.w or 0
-        local h = goblin.hitbox.h or 0
-        local dir = goblin.speed > 0 and 1 or -1
-
-        local ground = WindfieldSystem.PhysicsWorld:queryRectangleArea(
-            goblin.position.x + goblin.hitbox.w / 2 + dir * (goblin.hitbox.w / 2 + 2),
-            goblin.position.y + goblin.hitbox.h + 1,
-            2,
-            2,
-            {"Solid"}
-        )
-
-        if #ground == 0 then
-            goblin:flip()
-        end
-
-        if x <= w / 2 then
-            x = w / 2
-            goblin:flip()
-        end
-        
-        if x >= GAME_DATA.MAX_X - w / 2 then
-            x = GAME_DATA.MAX_X - w / 2
-            goblin:flip()
-        end
+        goblin:flip_if_not_collided_with_ground(goblin.SIZE)
         
         collider:setPosition(x, y)
 
-        goblin.position.x = x - w / 2 - PLAYER_DATA.PADDING_X
-        goblin.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        goblin.position.x = x - goblin.SIZE / 2
+        goblin.position.y = y - goblin.SIZE / 2 - PLAYER_DATA.PADDING_Y
 
         collider:setLinearVelocity(goblin.speed, vy)
 
@@ -146,6 +122,7 @@ return function()
         local sprite_x_offset = 5
 
         collider:setPosition(x, y)
+        goblin:flip_if_not_collided_with_ground(goblin.SIZE)
 
         goblin.position.x = x - w / 2 + PLAYER_DATA.PADDING_X + dir * sprite_x_offset
         goblin.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
@@ -158,22 +135,15 @@ return function()
         if collider:enter('Wall') or collider:enter('Player') then
             goblin:flip()
         end
-
-        local sword = {}
-        if dir > 0 then
-            sword = WindfieldSystem.PhysicsWorld:queryRectangleArea(
-                x + w / 2 - 3, y,
-                3, 2,
-                {"Player"})
-        else
-            sword = WindfieldSystem.PhysicsWorld:queryRectangleArea(
-                x - w / 2 - 1,
-                y,
-                3,
-                2,
-                {"Player"}
-            )
-        end
+        
+        local sword_width = 4
+        local sword = WindfieldSystem.PhysicsWorld:queryRectangleArea(
+            x + dir * goblin.SIZE + (dir < 0 and 0 or -sword_width),
+            y,
+            sword_width,
+            2,
+            {"Player"}
+        )
 
         if #sword > 0 then
             local player = sword[1]:getObject()
@@ -187,6 +157,34 @@ return function()
         goblin.dead = true
         goblin:remove('physics')
         goblin:set_anim('die')
+    end
+
+    function goblin:flip_if_not_collided_with_ground(w)
+        local x, y = goblin.collider.data:getPosition()
+        local dir = goblin.speed > 0 and 1 or -1
+        local trigger_size = 2
+
+        local ground = WindfieldSystem.PhysicsWorld:queryRectangleArea(
+            goblin.position.x + dir * goblin.SIZE + (dir < 0 and goblin.SIZE/2 + trigger_size or 0),
+            goblin.position.y + goblin.hitbox.h + 1,
+            trigger_size,
+            trigger_size,
+            {"Solid"}
+        )
+
+        if #ground == 0 then
+            goblin:flip()
+        end
+
+        if x <= goblin.SIZE / 2 then
+            x = goblin.SIZE / 2
+            goblin:flip()
+        end
+        
+        if x >= GAME_DATA.MAX_X - goblin.SIZE / 2 then
+            x = GAME_DATA.MAX_X - goblin.SIZE / 2
+            goblin:flip()
+        end
     end
 
     return goblin
