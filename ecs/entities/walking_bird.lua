@@ -1,29 +1,34 @@
 return function()
     local walking_bird = ECS.entity()
-    walking_bird:give('sprite', assets.sprites.fauna, 0, 0)
-    walking_bird:give('hitbox', 8, 7)
-    walking_bird:give('position', 0, 0)
-    walking_bird:give('physics')
-    walking_bird:give('fauna')
 
-    local g = anim8.newGrid(8, 8, assets.sprites.fauna:getWidth(), assets.sprites.fauna:getHeight())
-    walking_bird:give('anim8', {
-        run = anim8.newAnimation(g("1-3", 3), 0.1),
-        idle = anim8.newAnimation(g("1-8", 1), 0.3)
-    }, 'idle')
-    
-    walking_bird.STATE_TIME = 2.0
+    walking_bird.IDLE_TIME = 0.3
+    walking_bird.RUN_TIME = 0.1
     walking_bird.SPEED = -25
+    walking_bird.STATE_TIME = 2.0
+    walking_bird.STATES =  {IDLE = 'IDLE', RUN = 'RUN'}
 
-    walking_bird.states =  {IDLE = 'IDLE', RUN = 'RUN'}
-    walking_bird.state = walking_bird.states.IDLE
     walking_bird.speed = walking_bird.SPEED
+    walking_bird.state = walking_bird.STATES.IDLE
     walking_bird.timer = Timer()
+
+    walking_bird:give('fauna')
+    walking_bird:give('hitbox', 8, 7)
+    walking_bird:give('physics')
+    walking_bird:give('position')
+    walking_bird:give('sprite', assets.sprites.fauna)
+
+
+    local frame_width, frame_height = 8, 8
+    local g = anim8.newGrid(frame_width, frame_height, assets.sprites.fauna:getWidth(), assets.sprites.fauna:getHeight())
+    walking_bird:give('anim8', {
+        idle = anim8.newAnimation(g("1-8", 1), walking_bird.IDLE_TIME),
+        run  = anim8.newAnimation(g("1-3", 3), walking_bird.RUN_TIME)
+    }, 'idle')
 
     function walking_bird:update(dt)
         walking_bird.timer:update(dt)
 
-        if walking_bird.state == walking_bird.states.RUN then
+        if walking_bird.state == walking_bird.STATES.RUN then
             local collider = walking_bird.collider.data
             local x, y = collider:getPosition()
             local _, vy = collider:getLinearVelocity()
@@ -68,13 +73,13 @@ return function()
     end
 
     function walking_bird:switch_state()
-        if walking_bird.state == walking_bird.states.IDLE then
-            walking_bird.state = walking_bird.states.RUN
+        if walking_bird.state == walking_bird.STATES.IDLE then
+            walking_bird.state = walking_bird.STATES.RUN
             walking_bird.anim8.name = 'run'
             local dir = walking_bird.speed > 0 and 1 or -1
             walking_bird.collider.data:setLinearVelocity(dir * walking_bird.speed, 0)
         else
-            walking_bird.state = walking_bird.states.IDLE
+            walking_bird.state = walking_bird.STATES.IDLE
             walking_bird.anim8.name = 'idle'
             walking_bird.collider.data:setLinearVelocity(0, 0)
         end
