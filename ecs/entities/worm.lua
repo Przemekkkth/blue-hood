@@ -1,33 +1,20 @@
 return function()
     local worm = ECS.entity()
+
     worm.speed = ENEMY_DATA.WORM_SPEED
 
-    worm:give('position', 0, 0)
+    worm:give('enemy')
     worm:give('hitbox', 14, 6)
     worm:give('physics')
-    worm:give('sprite', assets.sprites.worm, 0, 0)
-    worm:give('enemy')
+    worm:give('position')
+    worm:give('sprite', assets.sprites.worm)
 
-    local g = anim8.newGrid(16, 8, assets.sprites.worm:getWidth(), assets.sprites.worm:getHeight())
+    local frame_width, frame_height = 16, 8
+    local g = anim8.newGrid(frame_width, frame_height, assets.sprites.worm:getWidth(), assets.sprites.worm:getHeight())
     worm:give('anim8', {
         walk = anim8.newAnimation(g("1-6", 1), 0.1),
         dead = anim8.newAnimation(g("1-6", 2), 0.3, 'pauseAtEnd')
     }, 'walk')
-
-    function worm:set_anim(anim_name)
-        worm.anim8.name = anim_name
-    end
-
-    function worm:smashed()
-        worm:remove('physics')
-        worm.collider.data:destroy()
-        worm:set_anim('dead')
-    end
-
-    function worm:flip()
-        worm.speed = -worm.speed
-        worm.sprite.flipped_h = worm.speed < 0
-    end
 
     function worm:update(dt)
         local collider = worm.collider.data
@@ -78,6 +65,21 @@ return function()
                 player:bounce()
             end
         end
+    end
+
+    function worm:set_anim(anim_name)
+        worm.anim8.name = anim_name
+    end
+
+    function worm:smashed()
+        worm:remove('physics')
+        worm.collider.data:destroy()
+        worm:set_anim('dead')
+    end
+
+    function worm:flip()
+        worm.speed = -worm.speed
+        worm.sprite.flipped_h = worm.speed < 0
     end
     
     return worm
