@@ -1,5 +1,6 @@
 return function()
     local slime = ECS.entity()
+    
     slime.speed = ENEMY_DATA.SLIME_SPEED
     slime.last_speed = slime.speed
     slime.STATE_TIME = 2.0
