@@ -1,26 +1,30 @@
 return function()
     local orange_fly = ECS.entity()
-    orange_fly.speed = ENEMY_DATA.ORANGE_FLY_SPEED
-    orange_fly.STATES = {IDLE = 'IDLE', WALK = 'WALK', RUN = 'RUN'}
-    orange_fly.state = orange_fly.STATES.IDLE
+
+    orange_fly.DIE_TIME = 0.2
     orange_fly.IDLE_TIME = 0.4
-    orange_fly.WALK_TIME = 1.0
     orange_fly.RUN_TIME = 0.80
+    orange_fly.SIZE = 8
+    orange_fly.STATES = {IDLE = 'IDLE', WALK = 'WALK', RUN = 'RUN'}
+    orange_fly.WALK_TIME = 1.0
+
+    orange_fly.speed = ENEMY_DATA.ORANGE_FLY_SPEED
+    orange_fly.state = orange_fly.STATES.IDLE
     orange_fly.time = 0
     
-    orange_fly:give('position', 0, 0)
-    orange_fly:give('hitbox', 8, 8)
-    orange_fly:give('physics')
-    orange_fly:give('sprite', assets.sprites.fly, 0, 0)
-    orange_fly.sprite.flipped_h = orange_fly.speed > 0
     orange_fly:give('enemy')
+    orange_fly:give('hitbox', orange_fly.SIZE, orange_fly.SIZE)
+    orange_fly:give('position')
+    orange_fly:give('physics')
+    orange_fly:give('sprite', assets.sprites.fly)
+    orange_fly.sprite.flipped_h = orange_fly.speed > 0
 
-    local g = anim8.newGrid(8, 8, assets.sprites.fly:getWidth(), assets.sprites.fly:getHeight())
-    
+
+    local g = anim8.newGrid(orange_fly.SIZE, orange_fly.SIZE, assets.sprites.fly:getWidth(), assets.sprites.fly:getHeight())
     orange_fly:give('anim8', {
-        die = anim8.newAnimation(g("1-5",  5), 0.2, 'pauseAtEnd'),
-        move = anim8.newAnimation(g("1-3", 8), 0.1),
-        idle = anim8.newAnimation(g("1-3", 6), 0.1),
+        die = anim8.newAnimation(g("1-5",  5), orange_fly.DIE_TIME, 'pauseAtEnd'),
+        move = anim8.newAnimation(g("1-3", 8), orange_fly.RUN_TIME / 9),
+        idle = anim8.newAnimation(g("1-3", 6), orange_fly.IDLE_TIME / 6),
     }, 'idle')
 
       
@@ -40,6 +44,7 @@ return function()
 
     function orange_fly:update_state(dt)
         orange_fly.time = orange_fly.time + dt
+
         if orange_fly.state == orange_fly.STATES.IDLE and orange_fly.time > orange_fly.IDLE_TIME then
             orange_fly.time = 0
             orange_fly.state = orange_fly.STATES.WALK
@@ -66,7 +71,9 @@ return function()
             orange_fly:move()
         end
 
-        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(orange_fly.position.x - 2, orange_fly.position.y - 2, orange_fly.hitbox.w, 2, {'Player'})
+        local top_collider_size = 2
+        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(orange_fly.position.x - top_collider_size, orange_fly.position.y - top_collider_size, 
+                                                                             orange_fly.SIZE + top_collider_size, top_collider_size, {'Player'})
         if #top_collider > 0 then
             local player = top_collider[1]:getObject()
             if player:velocity().y > 0 then
@@ -79,12 +86,10 @@ return function()
     function orange_fly:idle()
         local collider = orange_fly.collider.data
         local x, y = collider:getPosition()
-        local w = orange_fly.hitbox.w or 0
-        local h = orange_fly.hitbox.h or 0
         collider:setPosition(x, y)
 
-        orange_fly.position.x = x - w / 2 + PLAYER_DATA.PADDING_X
-        orange_fly.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        orange_fly.position.x = x - orange_fly.SIZE / 2
+        orange_fly.position.y = y - orange_fly.SIZE / 2
 
         collider:setLinearVelocity(0, 0)
     end
@@ -92,14 +97,11 @@ return function()
     function orange_fly:move()
         local collider = orange_fly.collider.data
         local x, y = collider:getPosition()
-        local w = orange_fly.hitbox.w or 0
-        local h = orange_fly.hitbox.h or 0
-        local dir = orange_fly.speed > 0 and 1 or -1
 
         collider:setPosition(x, y)
 
-        orange_fly.position.x = x - w / 2 + PLAYER_DATA.PADDING_X
-        orange_fly.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        orange_fly.position.x = x - orange_fly.SIZE / 2
+        orange_fly.position.y = y - orange_fly.SIZE / 2
 
         if collider:enter('Wall') or collider:enter('Player') then
             orange_fly:flip()
