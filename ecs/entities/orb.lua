@@ -1,11 +1,14 @@
 return function()
     local orb = ECS.entity()
-    orb:give('hitbox', 8, 8)
-    orb:give('position', 0, 0)
-    orb:give('sprite', assets.sprites.orbs, 0, 0)
+
+    orb.SIZE = 8
+
+    orb:give('hitbox', orb.SIZE, orb.SIZE)
+    orb:give('position')
+    orb:give('sprite', assets.sprites.orbs)
     orb.sprite.order = 11
 
-    local g = anim8.newGrid(8, 8, assets.sprites.orbs:getWidth(), assets.sprites.orbs:getHeight())
+    local g = anim8.newGrid(orb.SIZE, orb.SIZE, assets.sprites.orbs:getWidth(), assets.sprites.orbs:getHeight())
     orb:give('anim8', {
         idle = anim8.newAnimation(g("1-6", 1), 0.2),
         collected = anim8.newAnimation(g("1-5", 2), 0.3)

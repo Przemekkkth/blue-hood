@@ -1,25 +1,29 @@
 return function()
     local blue_fly = ECS.entity()
-    blue_fly.speed = ENEMY_DATA.BLUE_FLY_SPEED
-    blue_fly.STATES = {IDLE = 'IDLE', MOVE = 'MOVE'}
-    blue_fly.state = blue_fly.STATES.IDLE
+    
+    blue_fly.DIE_TIME = 0.2
     blue_fly.IDLE_TIME = 0.4
     blue_fly.MOVE_TIME = 0.75
+    blue_fly.SIZE = 8
+    blue_fly.STATES = {IDLE = 'IDLE', MOVE = 'MOVE'}
+
+    blue_fly.speed = ENEMY_DATA.BLUE_FLY_SPEED
+    blue_fly.state = blue_fly.STATES.IDLE
     blue_fly.time = 0
     
     blue_fly:give('position', 0, 0)
-    blue_fly:give('hitbox', 8, 8)
+    blue_fly:give('hitbox', blue_fly.SIZE, blue_fly.SIZE)
     blue_fly:give('physics')
     blue_fly:give('sprite', assets.sprites.fly, 0, 0)
     blue_fly.sprite.flipped_h = blue_fly.speed > 0
     blue_fly:give('enemy')
 
-    local g = anim8.newGrid(8, 8, assets.sprites.fly:getWidth(), assets.sprites.fly:getHeight())
+    local g = anim8.newGrid(blue_fly.SIZE, blue_fly.SIZE, assets.sprites.fly:getWidth(), assets.sprites.fly:getHeight())
     
     blue_fly:give('anim8', {
-        die = anim8.newAnimation(g("1-5", 1), 0.2, 'pauseAtEnd'),
-        move = anim8.newAnimation(g("1-3", 4), 0.1),
-        idle = anim8.newAnimation(g("1-3", 2), 0.1),
+        die = anim8.newAnimation(g("1-5", 1),  blue_fly.DIE_TIME, 'pauseAtEnd'),
+        move = anim8.newAnimation(g("1-3", 4), blue_fly.MOVE_TIME / 9),
+        idle = anim8.newAnimation(g("1-3", 2), blue_fly.IDLE_TIME / 3),
     }, 'idle')
 
       
@@ -39,6 +43,7 @@ return function()
 
     function blue_fly:update_state(dt)
         blue_fly.time = blue_fly.time + dt
+
         if blue_fly.state == blue_fly.STATES.IDLE and blue_fly.time > blue_fly.IDLE_TIME then
             blue_fly.time = 0
             blue_fly.state = blue_fly.STATES.MOVE
@@ -63,7 +68,8 @@ return function()
             blue_fly:move()
         end
 
-        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(blue_fly.position.x - 2, blue_fly.position.y - 2, blue_fly.hitbox.w, 2, {'Player'})
+        local top_collider_height = 2
+        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(blue_fly.position.x, blue_fly.position.y - top_collider_height, blue_fly.hitbox.w, top_collider_height, {'Player'})
         if #top_collider > 0 then
             local player = top_collider[1]:getObject()
             if player:velocity().y > 0 then
@@ -76,12 +82,10 @@ return function()
     function blue_fly:idle()
         local collider = blue_fly.collider.data
         local x, y = collider:getPosition()
-        local w = blue_fly.hitbox.w or 0
-        local h = blue_fly.hitbox.h or 0
         collider:setPosition(x, y)
 
-        blue_fly.position.x = x - w / 2 + PLAYER_DATA.PADDING_X
-        blue_fly.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        blue_fly.position.x = x - blue_fly.SIZE / 2
+        blue_fly.position.y = y - blue_fly.SIZE / 2
 
         collider:setLinearVelocity(0, 0)
     end
@@ -89,14 +93,11 @@ return function()
     function blue_fly:move()
         local collider = blue_fly.collider.data
         local x, y = collider:getPosition()
-        local w = blue_fly.hitbox.w or 0
-        local h = blue_fly.hitbox.h or 0
-        local dir = blue_fly.speed > 0 and 1 or -1
 
         collider:setPosition(x, y)
 
-        blue_fly.position.x = x - w / 2 + PLAYER_DATA.PADDING_X
-        blue_fly.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        blue_fly.position.x = x - blue_fly.SIZE / 2
+        blue_fly.position.y = y - blue_fly.SIZE / 2
 
         if collider:enter('Wall') or collider:enter('Player') then
             blue_fly:flip()

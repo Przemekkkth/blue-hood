@@ -1,16 +1,6 @@
 return function()
-    local function get_multiline_width(font, text)
-        local max = 0
-    
-        for line in text:gmatch("[^\n]+") do
-            max = math.max(max, font:getWidth(line))
-        end
-    
-        return max
-    end
-
-
     local hint = ECS.entity()
+
     hint:give('position', 0, 0)
     hint:give('physics')
     hint:give('hitbox', 16, 16)
@@ -27,7 +17,7 @@ return function()
     function hint:update_hint_text_pos()
         local text = hint.text.text.data
     
-        local width = get_multiline_width(FONT_x1, text)
+        local width = hint:get_multiline_width(FONT_x1, text)
     
         hint.text.position.x = hint.position.x + 8 - width / 2
         hint.text.position.y = hint.position.y - FONT_x1:getHeight() * 2 - 2
@@ -48,6 +38,16 @@ return function()
         else
             hint.text.text.visible = false
         end
+    end
+
+    function hint:get_multiline_width(font, text)
+        local max = 0
+        
+        for line in text:gmatch("[^\n]+") do
+            max = math.max(max, font:getWidth(line))
+        end
+        
+        return max
     end
 
     return hint

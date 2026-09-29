@@ -1,18 +1,23 @@
 return function()
     local mushroom = ECS.entity()
+
+    mushroom.ANIM_TIME = 0.2
+    mushroom.SIZE = 14
+
     mushroom.speed = ENEMY_DATA.MUSHROOM_SPEED
 
-    mushroom:give('position', 0, 0)
-    mushroom:give('hitbox', 14, 14)
-    mushroom:give('physics')
-    mushroom:give('sprite', assets.sprites.mushroom, 0, 0)
     mushroom:give('enemy')
+    mushroom:give('hitbox', mushroom.SIZE, mushroom.SIZE)
+    mushroom:give('physics')
+    mushroom:give('position')
+    mushroom:give('sprite', assets.sprites.mushroom)
 
+    local frame_width, frame_height = 16, 16
     local g = anim8.newGrid(16, 16, assets.sprites.mushroom:getWidth(), assets.sprites.mushroom:getHeight())
     mushroom:give('anim8', {
-        walk = anim8.newAnimation(g("1-8", 1), 0.2),
-        smash = anim8.newAnimation(g("1-3", 2), 0.2, 'pauseAtEnd'),
-        die = anim8.newAnimation(g("1-8", 3), 0.2, 'pauseAtEnd'),
+        walk = anim8.newAnimation(g("1-8", 1), mushroom.ANIM_TIME),
+        smash = anim8.newAnimation(g("1-3", 2), mushroom.ANIM_TIME, 'pauseAtEnd'),
+        die = anim8.newAnimation(g("1-8", 3), mushroom.ANIM_TIME, 'pauseAtEnd'),
     }, 'walk')
 
     function mushroom:set_anim(anim_name)
@@ -34,13 +39,11 @@ return function()
         local collider = mushroom.collider.data
         local x, y = collider:getPosition()
         local _, vy = collider:getLinearVelocity()
-        local w = mushroom.hitbox.w or 0
-        local h = mushroom.hitbox.h or 0
         local dir = mushroom.speed > 0 and 1 or -1
 
         local ground = WindfieldSystem.PhysicsWorld:queryRectangleArea(
-            mushroom.position.x + mushroom.hitbox.w / 2 + dir * (mushroom.hitbox.w / 2 + 2),
-            mushroom.position.y + mushroom.hitbox.h + 1,
+            mushroom.position.x + mushroom.SIZE / 2 + dir * (mushroom.SIZE / 2 + 2),
+            mushroom.position.y + mushroom.SIZE + 1,
             2,
             2,
             {"Solid"}
@@ -50,20 +53,20 @@ return function()
             mushroom:flip()
         end
 
-        if x <= w / 2 then
-            x = w / 2
+        if x <= mushroom.SIZE / 2 then
+            x = mushroom.SIZE / 2
             mushroom:flip()
         end
         
-        if x >= GAME_DATA.MAX_X - w / 2 then
-            x = GAME_DATA.MAX_X - w / 2
+        if x >= GAME_DATA.MAX_X - mushroom.SIZE / 2 then
+            x = GAME_DATA.MAX_X - mushroom.SIZE / 2
             mushroom:flip()
         end
         
         collider:setPosition(x, y)
 
-        mushroom.position.x = x - w / 2 - PLAYER_DATA.PADDING_X
-        mushroom.position.y = y - h / 2 - PLAYER_DATA.PADDING_Y
+        mushroom.position.x = x - mushroom.SIZE / 2 - PLAYER_DATA.PADDING_X
+        mushroom.position.y = y - mushroom.SIZE / 2 - PLAYER_DATA.PADDING_Y
 
         collider:setLinearVelocity(mushroom.speed, vy)
 
@@ -75,7 +78,7 @@ return function()
             collider:destroy()
         end
 
-        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(mushroom.position.x + 3, mushroom.position.y - 2, mushroom.hitbox.w - 2, 2, {'Player'})
+        local top_collider = WindfieldSystem.PhysicsWorld:queryRectangleArea(mushroom.position.x + 3, mushroom.position.y - 2, mushroom.SIZE - 2, 2, {'Player'})
         if #top_collider > 0 then
             local player = top_collider[1]:getObject()
             if player:velocity().y > 0 then

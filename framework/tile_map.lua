@@ -169,12 +169,11 @@ function TileMap:add_spikes_to_world(world)
             local spikes = require 'ecs.entities.spikes'()
             local x = obj.x
             local y = obj.y
-            local padding = spikes.padding
-            local w = spikes.hitbox.w - 2 * padding
-            local h = spikes.hitbox.w - 2 * padding
+            local w = spikes.hitbox.w - 2 * spikes.PADDING
+            local h = spikes.hitbox.w - 2 * spikes.PADDING
             spikes:give('position', x, y)
             spikes:give('physics')
-            spikes:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(x + padding, y + padding, w, h))
+            spikes:give('collider', WindfieldSystem.PhysicsWorld:newRectangleCollider(x + spikes.PADDING, y + spikes.PADDING, w, h))
             spikes:give('hazard')
             spikes.collider.data:setType('static')
             spikes.collider.data:setCollisionClass('Hazard')

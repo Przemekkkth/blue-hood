@@ -1,8 +1,12 @@
 return function()
     local spikes = ECS.entity()
-    spikes.padding = 2
-    spikes:give('position', 0, 0)
-    spikes:give('sprite', assets.sprites.spikes, 0, 0)
-    spikes:give('hitbox', 16, 16)
+
+    spikes.PADDING = 2
+    spikes.SIZE = 16
+
+    spikes:give('hitbox', spikes.SIZE, spikes.SIZE)
+    spikes:give('position')
+    spikes:give('sprite', assets.sprites.spikes)
+
     return spikes
 end
